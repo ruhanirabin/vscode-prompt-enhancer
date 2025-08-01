@@ -2,7 +2,11 @@
 
 Transform basic prompts into sophisticated, detailed prompts using OpenAI's API directly within Visual Studio Code.
 
-![Prompt Enhancer Demo](https://via.placeholder.com/800x400/1e1e1e/ffffff?text=Prompt+Enhancer+Demo)
+![Prompt Enhancer]("images/image1.png")
+
+![Prompt Enhancer]("images/image2.png")
+
+![Prompt Enhancer]("images/image3.png")
 
 ## Features
 
@@ -51,25 +55,7 @@ Install from the VSCode Marketplace or package the extension locally.
 ```
 
 ## Installation
-
-### From Source
-```bash
-# Clone the repository
-git clone <repository-url>
-cd prompt-enhancer
-
-# Install dependencies
-npm install
-
-# Compile the extension
-npm run compile
-
-# Package the extension
-npm run package
-
-# Install the packaged extension
-code --install-extension prompt-enhancer-1.0.0.vsix
-```
+([Click to Install](vscode:extension/ruhanirabin.prompt-enhancer-ex))
 
 ### Prerequisites
 - Visual Studio Code 1.85.0 or higher
