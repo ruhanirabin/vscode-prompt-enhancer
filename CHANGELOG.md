@@ -5,7 +5,38 @@ All notable changes to the "Prompt Enhancer" extension will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.0.0] - 2024-01-31
+## [Unreleased]
+
+### Fixed
+- Updated README to clarify initial version and future improvements
+
+## [1.0.3] - 2025-08-01
+
+### Fixed
+- Updated README to clarify initial version and remove development section
+- Improved documentation clarity
+
+## [1.0.2] - 2025-08-01
+
+### Fixed
+- Fixed image paths in README documentation
+- Restored LICENSE.md file
+- Corrected license file references
+
+## [1.0.1] - 2025-08-01
+
+### Changed
+- Refactored code structure for improved readability and maintainability
+- Updated project documentation
+- Added extension icon and promotional images
+
+### Fixed
+- Updated keybindings from Ctrl+Shift+E to Ctrl+Shift+Alt+/ for prompt enhancement
+- Updated keybindings for API key configuration to Ctrl+Shift+Alt+P
+- Removed deprecated test files and diagnostic scripts
+- Updated @vscode/vsce dependency to version 3.6.0
+
+## [1.0.0] - 2025-08-01
 
 ### Added
 - Initial release of Prompt Enhancer extension
@@ -27,7 +58,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Request timeout configuration
   - Maximum tokens and temperature settings
   - Default template selection
-- Keyboard shortcut support (Ctrl+Shift+E / Cmd+Shift+E)
+- Keyboard shortcut support (Ctrl+Shift+Alt+/ / Cmd+Shift+Alt+/)
 - Loading indicators during API calls
 - Comprehensive error handling with user-friendly messages
 - Retry mechanisms for failed requests
@@ -56,8 +87,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - ESLint configuration
 - Webpack bundling for optimal performance
 
-## [Unreleased]
-
 ### Planned Features
 - Batch processing for multiple selections
 - Custom template editor with syntax highlighting
@@ -74,19 +103,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - None currently reported
 
 ## Development Notes
-
-### Version 1.0.0 Development Timeline
-- **Week 1**: Architecture design and core infrastructure
-- **Week 2**: OpenAI integration and template system
-- **Week 3**: User interface and error handling
-- **Week 4**: Testing, documentation, and packaging
-
-### Technical Decisions
-- **TypeScript**: Chosen for type safety and better developer experience
-- **OpenAI API**: Selected for high-quality prompt enhancement capabilities
-- **VSCode SecretStorage**: Used for secure API key management
-- **Modular Architecture**: Implemented for maintainability and extensibility
-- **Comprehensive Testing**: Ensures reliability and quality
 
 ### Performance Benchmarks
 - **Average Enhancement Time**: 2-5 seconds (depending on model and text length)
@@ -114,8 +130,8 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 For support, please:
 1. Check the [README](README.md) for usage instructions
 2. Review the [Setup Guide](SETUP.md) for installation help
-3. Search [existing issues](https://github.com/your-repo/prompt-enhancer/issues)
-4. Create a [new issue](https://github.com/your-repo/prompt-enhancer/issues/new) if needed
+3. Search [existing issues](https://github.com/ruhanirabin/vscode-prompt-enhancer/issues)
+4. Create a [new issue](https://github.com/ruhanirabin/vscode-prompt-enhancer/issues/new) if needed
 
 ## License
 
