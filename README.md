@@ -1,5 +1,7 @@
 # Prompt Enhancer
 
+(This is an initial version, please report bugs)
+
 Transform basic prompts into sophisticated, detailed prompts using OpenAI's API directly within Visual Studio Code.
 
 ![Prompt Enhancer]("./images/image1.png")
@@ -155,26 +157,6 @@ Access settings via `File > Preferences > Settings` and search for "Prompt Enhan
 2. Search [existing issues](https://github.com/your-repo/prompt-enhancer/issues)
 3. Create a [new issue](https://github.com/your-repo/prompt-enhancer/issues/new) with details
 
-## Development
-
-### Building from Source
-```bash
-# Install dependencies
-npm install
-
-# Compile TypeScript
-npm run compile
-
-# Watch for changes
-npm run watch
-
-# Run tests
-npm test
-
-# Package extension
-npm run package
-```
-
 ### Project Structure
 ```
 prompt-enhancer/
@@ -236,7 +218,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Support
 
-- 📧 Email: support@prompt-enhancer.dev
 - 🐛 Issues: [GitHub Issues](https://github.com/your-repo/prompt-enhancer/issues)
 - 💬 Discussions: [GitHub Discussions](https://github.com/your-repo/prompt-enhancer/discussions)
 - 📖 Wiki: [Documentation](https://github.com/your-repo/prompt-enhancer/wiki)
