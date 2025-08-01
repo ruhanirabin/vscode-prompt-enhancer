@@ -2,7 +2,7 @@
   "name": "prompt-enhancer-ex",
   "displayName": "Prompt Enhancer",
   "description": "Transform basic prompts into sophisticated, detailed prompts using OpenAI's API",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "ruhanirabin",
   "icon": "images/pex-icon.png",
   "license": "MIT",
