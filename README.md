@@ -4,11 +4,9 @@
 
 Transform basic prompts into sophisticated, detailed prompts using OpenAI's API directly within Visual Studio Code.
 
-![Prompt Enhancer]("./images/image1.png")
-
-![Prompt Enhancer]("./images/image2.png")
-
-![Prompt Enhancer]("./images/image3.png")
+![image1](https://app1.sharemyimage.com/2025/08/01/image1.png)
+![image2](https://app1.sharemyimage.com/2025/08/01/image2.png)
+![image3](https://app1.sharemyimage.com/2025/08/01/image3.png)
 
 ## Features
 
