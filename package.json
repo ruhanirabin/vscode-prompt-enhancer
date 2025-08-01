@@ -1,0 +1,153 @@
+{
+  "name": "prompt-enhancer",
+  "displayName": "Prompt Enhancer",
+  "description": "Transform basic prompts into sophisticated, detailed prompts using OpenAI's API",
+  "version": "1.0.0",
+  "publisher": "prompt-enhancer-dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/prompt-enhancer/vscode-extension"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other",
+    "Machine Learning"
+  ],
+  "keywords": [
+    "prompt",
+    "ai",
+    "openai",
+    "enhancement",
+    "writing",
+    "productivity"
+  ],
+  "activationEvents": [
+    "onCommand:promptEnhancer.enhance",
+    "onCommand:promptEnhancer.configureApiKey",
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "promptEnhancer.enhance",
+        "title": "Enhance Prompt",
+        "category": "Prompt Enhancer"
+      },
+      {
+        "command": "promptEnhancer.configureApiKey",
+        "title": "Configure API Key",
+        "category": "Prompt Enhancer"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "promptEnhancer.enhance",
+        "key": "ctrl+shift+e",
+        "mac": "cmd+shift+e",
+        "when": "editorHasSelection"
+      }
+    ],
+    "configuration": {
+      "title": "Prompt Enhancer",
+      "properties": {
+        "promptEnhancer.model": {
+          "type": "string",
+          "enum": [
+            "gpt-4o-mini",
+            "gpt-4o",
+            "gpt-3.5-turbo"
+          ],
+          "default": "gpt-4o-mini",
+          "description": "OpenAI model to use for prompt enhancement"
+        },
+        "promptEnhancer.timeout": {
+          "type": "number",
+          "default": 30000,
+          "minimum": 5000,
+          "maximum": 120000,
+          "description": "API request timeout in milliseconds"
+        },
+        "promptEnhancer.defaultTemplate": {
+          "type": "string",
+          "enum": [
+            "general",
+            "technical",
+            "creative",
+            "comments",
+            "custom"
+          ],
+          "default": "general",
+          "description": "Default enhancement template to use"
+        },
+        "promptEnhancer.maxTokens": {
+          "type": "number",
+          "default": 1000,
+          "minimum": 100,
+          "maximum": 4000,
+          "description": "Maximum tokens for API response"
+        },
+        "promptEnhancer.temperature": {
+          "type": "number",
+          "default": 0.7,
+          "minimum": 0,
+          "maximum": 2,
+          "description": "Creativity level (0 = focused, 2 = very creative)"
+        },
+        "promptEnhancer.customTemplate": {
+          "type": "string",
+          "default": "Please enhance this prompt to make it more effective and detailed:",
+          "description": "Custom template for prompt enhancement"
+        },
+        "promptEnhancer.apiKeyStatus": {
+          "type": "string",
+          "enum": [
+            "not-configured",
+            "configured"
+          ],
+          "default": "not-configured",
+          "description": "OpenAI API Key status (use 'Configure API Key' command to set)",
+          "enumDescriptions": [
+            "API Key not configured - use Command Palette: 'Prompt Enhancer: Configure API Key'",
+            "API Key is configured and stored securely"
+          ]
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package-ext",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package-ext": "webpack --mode production --devtool hidden-source-map",
+    "compile-web": "webpack",
+    "watch-web": "webpack --watch",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/glob": "^8.1.0",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "18.x",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "@vscode/test-electron": "^2.3.8",
+    "@vscode/vsce": "^2.22.0",
+    "eslint": "^8.56.0",
+    "glob": "^11.0.3",
+    "mocha": "^10.2.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.3.3",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "openai": "^4.28.0"
+  }
+}
