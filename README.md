@@ -8,7 +8,7 @@ Transform basic prompts into sophisticated, detailed prompts using OpenAI's API 
 
 ### 🚀 **One-Click Enhancement**
 - Select any text in your editor
-- Press `Ctrl+Shift+E` (or `Cmd+Shift+E` on Mac)
+- Press `Ctrl+Shift+Alt+/` (or `Cmd+Shift+Alt+/` on Mac)
 - Watch your basic prompt transform into a detailed, effective prompt
 
 ### 🎯 **Multiple Enhancement Templates**
@@ -37,7 +37,7 @@ Install from the VSCode Marketplace or package the extension locally.
 
 ### 2. Configure Your API Key
 ```
-1. Open Command Palette (Ctrl+Shift+P / Cmd+Shift+P)
+1. Press Ctrl+Shift+Alt+P (Cmd+Shift+Alt+P on Mac) or use Command Palette (Ctrl+Shift+P / Cmd+Shift+P)
 2. Run "Prompt Enhancer: Configure API Key"
 3. Enter your OpenAI API key
 ```
@@ -45,7 +45,7 @@ Install from the VSCode Marketplace or package the extension locally.
 ### 3. Start Enhancing
 ```
 1. Select any text in your editor
-2. Press Ctrl+Shift+E (Cmd+Shift+E on Mac)
+2. Press Ctrl+Shift+Alt+/ (Cmd+Shift+Alt+/ on Mac)
 3. Choose an enhancement template
 4. Select how to apply the result
 ```
@@ -145,8 +145,8 @@ Access settings via `File > Preferences > Settings` and search for "Prompt Enhan
 
 | Command | Shortcut | Description |
 |---------|----------|-------------|
-| `Prompt Enhancer: Enhance Prompt` | `Ctrl+Shift+E` | Enhance selected text |
-| `Prompt Enhancer: Configure API Key` | - | Set up OpenAI API key |
+| `Prompt Enhancer: Enhance Prompt` | `Ctrl+Shift+Alt+/` | Enhance selected text |
+| `Prompt Enhancer: Configure API Key` | `Ctrl+Shift+Alt+P` | Set up OpenAI API key |
 
 ## Troubleshooting
 

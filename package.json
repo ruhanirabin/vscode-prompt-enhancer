@@ -45,9 +45,14 @@
     "keybindings": [
       {
         "command": "promptEnhancer.enhance",
-        "key": "ctrl+shift+e",
-        "mac": "cmd+shift+e",
+        "key": "ctrl+shift+alt+/",
+        "mac": "cmd+shift+alt+/",
         "when": "editorHasSelection"
+      },
+      {
+        "command": "promptEnhancer.configureApiKey",
+        "key": "ctrl+shift+alt+p",
+        "mac": "cmd+shift+alt+p"
       }
     ],
     "configuration": {
@@ -137,7 +142,7 @@
     "@typescript-eslint/eslint-plugin": "^6.15.0",
     "@typescript-eslint/parser": "^6.15.0",
     "@vscode/test-electron": "^2.3.8",
-    "@vscode/vsce": "^2.22.0",
+    "@vscode/vsce": "^3.6.0",
     "eslint": "^8.56.0",
     "glob": "^11.0.3",
     "mocha": "^10.2.0",

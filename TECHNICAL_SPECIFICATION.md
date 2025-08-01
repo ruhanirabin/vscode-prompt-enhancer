@@ -70,9 +70,14 @@
     "keybindings": [
       {
         "command": "promptEnhancer.enhance",
-        "key": "ctrl+shift+e",
-        "mac": "cmd+shift+e",
+        "key": "ctrl+shift+alt+/",
+        "mac": "cmd+shift+alt+/",
         "when": "editorHasSelection"
+      },
+      {
+        "command": "promptEnhancer.configureApiKey",
+        "key": "ctrl+shift+alt+p",
+        "mac": "cmd+shift+alt+p"
       }
     ],
     "configuration": {
