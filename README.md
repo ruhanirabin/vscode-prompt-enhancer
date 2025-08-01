@@ -155,32 +155,6 @@ Access settings via `File > Preferences > Settings` and search for "Prompt Enhan
 2. Search [existing issues](https://github.com/your-repo/prompt-enhancer/issues)
 3. Create a [new issue](https://github.com/your-repo/prompt-enhancer/issues/new) with details
 
-### Project Structure
-```
-prompt-enhancer/
-├── src/
-│   ├── extension.ts              # Main extension entry point
-│   ├── commands/
-│   │   └── enhancePrompt.ts     # Command handlers
-│   ├── services/
-│   │   └── openaiClient.ts      # OpenAI API client
-│   ├── config/
-│   │   └── settings.ts          # Settings management
-│   ├── templates/
-│   │   └── enhancementTemplates.ts # Prompt templates
-│   ├── ui/
-│   │   ├── quickPick.ts         # Quick pick menus
-│   │   └── loadingIndicator.ts  # Loading indicators
-│   ├── utils/
-│   │   ├── errorHandler.ts      # Error handling
-│   │   └── textProcessor.ts     # Text processing
-│   └── types/
-│       ├── openai.ts            # OpenAI API types
-│       └── extension.ts         # Extension types
-├── package.json                 # Extension manifest
-└── README.md                    # This file
-```
-
 ## Contributing
 
 We welcome contributions! To contribute:
