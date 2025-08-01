@@ -13,3 +13,14 @@
 /PROJECT_SUMMARY.md
 /RESOLUTION_APPROACHES.md
 /TROUBLESHOOTING_GUIDE.md
+# Debug files
+*-diagnostic*.js
+*-test*.js
+validation-logger.js
+DEBUG_*.md
+TROUBLESHOOTING_*.md
+*_RESOLUTION.md
+*_GUIDE.md
+COMPLETION_SUMMARY.md
+PROJECT_SUMMARY.md
+test-prompts.md
