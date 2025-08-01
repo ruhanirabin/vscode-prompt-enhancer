@@ -1,6 +1,6 @@
 # Prompt Enhancer
 
-(This is an initial version, please report bugs)
+## This is an initial version, please report bugs. This will be improved going forward.
 
 Transform basic prompts into sophisticated, detailed prompts using OpenAI's API directly within Visual Studio Code.
 
