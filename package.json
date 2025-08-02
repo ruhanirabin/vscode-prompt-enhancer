@@ -2,7 +2,7 @@
   "name": "prompt-enhancer-ex",
   "displayName": "Prompt Enhancer - Build Advanced Prompts with OpenAI API",
   "description": "Transform basic prompts into sophisticated, detailed prompts using OpenAI's API",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "publisher": "ruhanirabin",
   "icon": "images/pex-icon-300px.png",
   "license": "MIT",
@@ -57,7 +57,7 @@
     "prompt refinement",
     "text enhancement",
     "VS Code prompts",
-    "vibe coding"    
+    "vibe coding"
   ],
   "activationEvents": [
     "onCommand:promptEnhancer.enhance",
