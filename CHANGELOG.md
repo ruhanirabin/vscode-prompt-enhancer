@@ -7,6 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.7] - 2025-08-02
+
+### Added
+- Enhanced quick pick interface with comprehensive model selection and configuration options
+- Template management system with built-in template support (general, technical, creative, comments, custom)
+- Template registry for dynamic template loading and management
+- Template storage system for persistent template configuration
+- Support for multiple AI providers with provider-specific model lists
+- Configuration persistence for user preferences
+- Enhanced prompt handling capabilities with improved user experience
+
+### Changed
+- Upgraded UI components with advanced quick pick interface
+- Improved template system architecture with modular design
+- Enhanced OpenAI client with extended model support
+- Updated extension types to support new template and configuration features
+- Refined command handling for better template management
+- Updated package.json with template management command and keybinding
+
+### Fixed
+- Improved error handling in template operations
+- Enhanced configuration validation and persistence
+- Better user feedback for template selection and management
+
+### Assets
+- Updated extension icons with improved visual design
+- Added new icon variants for better marketplace presentation
+
 ## [1.0.6] - 2025-08-02
 
 ### Added

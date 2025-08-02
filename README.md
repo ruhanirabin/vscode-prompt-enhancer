@@ -1,6 +1,8 @@
 # Prompt Enhancer
 
-## This is an initial version, please report bugs. This will be improved going forward.
+## This is an initial version, please [report issues](https://github.com/ruhanirabin/vscode-prompt-enhancer/issues/new).
+
+### This will be improved going forward.
 
 Transform basic prompts into sophisticated, detailed prompts using OpenAI's API directly within Visual Studio Code. Originally, designed to help coders to convert their simple prompt into a technical prompt, for vibe coding. But, also added other options. 
 
@@ -13,6 +15,10 @@ Choose the option to insert ⤴️
 ![image3](https://raw.githubusercontent.com/ruhanirabin/vscode-prompt-enhancer/refs/heads/main/images/image3.png)
 Example output ⤴️
 
+![Template Manager](https://raw.githubusercontent.com/ruhanirabin/vscode-prompt-enhancer/refs/heads/main/images/template-manager.png)
+Import/Export, Create and Use existing templates from Template Manager ⤴️
+
+
 ## Features
 
 ### 🚀 **Universal One-Click Enhancement**
@@ -21,12 +27,18 @@ Example output ⤴️
 - Extension automatically copies selected text and enhances it
 - Works universally across all VSCode contexts
 
-### 🎯 **Multiple Enhancement Templates**
-- **General Enhancement**: Improve clarity, structure, and effectiveness
-- **Technical Coding**: Optimize for code generation and technical tasks
-- **Creative Writing**: Enhance for creative and narrative tasks
-- **Code Comments**: Transform code snippets into well-documented code
-- **Custom Template**: Use your own enhancement instructions
+### 🎯 **Advanced Template Management**
+- **Built-in Templates**: Five professionally crafted templates ready to use
+  - **General Enhancement**: Improve clarity, structure, and effectiveness
+  - **Technical Coding**: Optimize for code generation and technical tasks
+  - **Creative Writing**: Enhance for creative and narrative tasks
+  - **Code Comments**: Transform code snippets into well-documented code
+  - **Custom Template**: Use your own enhancement instructions
+- **Template Manager**: Press `Ctrl+Shift+Alt+T` (or `Cmd+Shift+Alt+T` on Mac) to access the template management interface
+- **Template Editor**: Create, edit, and customize your own enhancement templates
+- **Dynamic Template Loading**: Templates are loaded dynamically with persistent storage
+- **Template Categories**: Organize templates by type and purpose for easy selection
+- **Export and Import **: Create new templates or Export and import templates via JSON file
 
 ### 🔧 **Flexible Output Options**
 - **Replace**: Replace selected text with enhanced version
@@ -139,6 +151,7 @@ Access settings via `File > Preferences > Settings` and search for "Prompt Enhan
 |---------|----------|-------------|
 | `Prompt Enhancer: Enhance Prompt` | `Ctrl+Shift+Alt+/` | Enhance selected text (works anywhere) |
 | `Prompt Enhancer: Configure API Key` | `Ctrl+Shift+Alt+P` | Set up OpenAI API key |
+| `Prompt Enhancer: Manage Templates` | `Ctrl+Shift+Alt+T` | Manage enhancement templates |
 
 ## Troubleshooting
 
@@ -157,9 +170,9 @@ Access settings via `File > Preferences > Settings` and search for "Prompt Enhan
 - Solution: Wait a moment before trying again, or upgrade your OpenAI plan
 
 ### Getting Help
-1. Check the [troubleshooting guide](https://github.com/your-repo/prompt-enhancer/wiki/Troubleshooting)
-2. Search [existing issues](https://github.com/your-repo/prompt-enhancer/issues)
-3. Create a [new issue](https://github.com/your-repo/prompt-enhancer/issues/new) with details
+1. Check the [troubleshooting guide](https://github.com/ruhanirabin/vscode-prompt-enhancer/wiki/Troubleshooting)
+2. Search [existing issues](https://github.com/ruhanirabin/vscode-prompt-enhancer/issues)
+3. Create a [new issue](https://github.com/ruhanirabin/vscode-prompt-enhancer/new) with details
 
 ## Contributing
 
