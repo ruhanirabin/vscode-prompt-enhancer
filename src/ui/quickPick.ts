@@ -55,6 +55,24 @@ export class QuickPickManager {
     return selected?.action;
   }
 
+  static async showClipboardOutputActionSelector(): Promise<OutputAction | undefined> {
+    const items: QuickPickItem[] = [
+      {
+        label: '$(clippy) Copy to Clipboard',
+        description: 'Copy the enhanced prompt to clipboard (recommended for clipboard-based enhancement)',
+        action: 'copyToClipboard'
+      }
+    ];
+
+    const selected = await vscode.window.showQuickPick(items, {
+      placeHolder: 'Enhanced text will be copied to clipboard',
+      ignoreFocusOut: true,
+      matchOnDescription: true
+    });
+
+    return selected?.action || 'copyToClipboard'; // Default to clipboard for clipboard-based contexts
+  }
+
   static async showModelSelector(currentModel?: string): Promise<string | undefined> {
     const models = [
       {

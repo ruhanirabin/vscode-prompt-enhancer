@@ -13,10 +13,11 @@ export interface QuickPickItem extends vscode.QuickPickItem {
     action: OutputAction;
 }
 export interface EnhancementContext {
-    editor: vscode.TextEditor;
-    selection: vscode.Selection;
+    editor: vscode.TextEditor | null;
+    selection: vscode.Selection | null;
     selectedText: string;
-    document: vscode.TextDocument;
+    document: vscode.TextDocument | null;
+    isClipboardBased?: boolean;
 }
 export interface TemplateQuickPickItem extends vscode.QuickPickItem {
     template: EnhancementTemplate;

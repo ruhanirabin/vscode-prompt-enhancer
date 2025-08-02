@@ -145,8 +145,8 @@ async function showQuickStart() {
     },
     {
       label: '$(keyboard) Step 3: Use Shortcut',
-      description: 'Press Ctrl+Shift+E (Cmd+Shift+E on Mac)',
-      detail: 'Or use Command Palette: "Enhance Prompt"'
+      description: 'Press Ctrl+Shift+Alt+/ (Cmd+Shift+Alt+/ on Mac)',
+      detail: 'Works anywhere - automatically copies selected text and enhances it'
     },
     {
       label: '$(template) Step 4: Choose Template',

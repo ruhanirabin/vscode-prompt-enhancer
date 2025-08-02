@@ -2,18 +2,24 @@
 
 ## This is an initial version, please report bugs. This will be improved going forward.
 
-Transform basic prompts into sophisticated, detailed prompts using OpenAI's API directly within Visual Studio Code.
+Transform basic prompts into sophisticated, detailed prompts using OpenAI's API directly within Visual Studio Code. Originally, designed to help coders to convert their simple prompt into a technical prompt, for vibe coding. But, also added other options. 
 
-![image1](https://app1.sharemyimage.com/2025/08/01/image1.png)
-![image2](https://app1.sharemyimage.com/2025/08/01/image2.png)
-![image3](https://app1.sharemyimage.com/2025/08/01/image3.png)
+![image1](https://raw.githubusercontent.com/ruhanirabin/vscode-prompt-enhancer/refs/heads/main/images/image1.png)
+Initiate the process using a hotkey ⤴️
+
+![image2](https://raw.githubusercontent.com/ruhanirabin/vscode-prompt-enhancer/refs/heads/main/images/image2.png)
+Choose the option to insert ⤴️
+
+![image3](https://raw.githubusercontent.com/ruhanirabin/vscode-prompt-enhancer/refs/heads/main/images/image3.png)
+Example output ⤴️
 
 ## Features
 
-### 🚀 **One-Click Enhancement**
-- Select any text in your editor
+### 🚀 **Universal One-Click Enhancement**
+- Select any text anywhere in VSCode (editor, terminal, webviews, etc.)
 - Press `Ctrl+Shift+Alt+/` (or `Cmd+Shift+Alt+/` on Mac)
-- Watch your basic prompt transform into a detailed, effective prompt
+- Extension automatically copies selected text and enhances it
+- Works universally across all VSCode contexts
 
 ### 🎯 **Multiple Enhancement Templates**
 - **General Enhancement**: Improve clarity, structure, and effectiveness
@@ -41,17 +47,17 @@ Install from the VSCode Marketplace or package the extension locally.
 
 ### 2. Configure Your API Key
 ```
-1. Press Ctrl+Shift+Alt+P (Cmd+Shift+Alt+P on Mac) or use Command Palette (Ctrl+Shift+P / Cmd+Shift+P)
-2. Run "Prompt Enhancer: Configure API Key"
+1. Use Command Palette (Ctrl+Shift+P / Cmd+Shift+P)
+2. Run ">Prompt Enhancer: Configure API Key"
 3. Enter your OpenAI API key
 ```
 
 ### 3. Start Enhancing
 ```
-1. Select any text in your editor
+1. Select any text anywhere in VSCode (editor, terminal, webviews, etc.)
 2. Press Ctrl+Shift+Alt+/ (Cmd+Shift+Alt+/ on Mac)
 3. Choose an enhancement template
-4. Select how to apply the result
+4. Enhanced text is automatically copied to clipboard (or choose other output options for editor text)
 ```
 
 ## Installation
@@ -131,7 +137,7 @@ Access settings via `File > Preferences > Settings` and search for "Prompt Enhan
 
 | Command | Shortcut | Description |
 |---------|----------|-------------|
-| `Prompt Enhancer: Enhance Prompt` | `Ctrl+Shift+Alt+/` | Enhance selected text |
+| `Prompt Enhancer: Enhance Prompt` | `Ctrl+Shift+Alt+/` | Enhance selected text (works anywhere) |
 | `Prompt Enhancer: Configure API Key` | `Ctrl+Shift+Alt+P` | Set up OpenAI API key |
 
 ## Troubleshooting
@@ -179,6 +185,13 @@ We welcome contributions! To contribute:
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Changelog
+
+### Version 1.0.5
+- **Universal Clipboard Support**: Works anywhere in VSCode (editor, terminal, webviews)
+- **Auto-Copy Functionality**: Automatically copies selected text before enhancement
+- **Improved Error Handling**: Better feedback for clipboard-based operations
+- **Smart Context Detection**: Automatically detects editor vs clipboard contexts
+- **Enhanced Context Support**: Removed restrictive "editorHasSelection" condition
 
 ### Version 1.0.0
 - Initial release

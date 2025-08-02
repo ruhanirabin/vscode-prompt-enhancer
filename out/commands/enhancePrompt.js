@@ -46,16 +46,55 @@ class EnhancePromptCommand {
     }
     async execute() {
         try {
-            // Get active editor
+            let textToEnhance = '';
+            let context = null;
+            // Try to get text from active editor first (for better context)
             const editor = vscode.window.activeTextEditor;
-            if (!editor) {
-                vscode.window.showErrorMessage('No active editor found. Please open a file and select some text.');
-                return;
+            if (editor && !editor.selection.isEmpty) {
+                context = textProcessor_1.TextProcessor.createEnhancementContext(editor);
+                if (context) {
+                    textToEnhance = context.selectedText;
+                }
             }
-            // Create enhancement context
-            const context = textProcessor_1.TextProcessor.createEnhancementContext(editor);
+            // If no text from editor, use clipboard approach
+            if (!textToEnhance) {
+                try {
+                    // Execute copy command to get selected text into clipboard
+                    await vscode.commands.executeCommand('editor.action.clipboardCopyAction');
+                    // Small delay to ensure clipboard is populated
+                    await new Promise(resolve => setTimeout(resolve, 150));
+                    // Read from clipboard
+                    const clipboardText = await vscode.env.clipboard.readText();
+                    if (!clipboardText || clipboardText.trim().length === 0) {
+                        vscode.window.showWarningMessage('No text selected. Please select text first, then try again.', 'Learn More').then(action => {
+                            if (action === 'Learn More') {
+                                vscode.window.showInformationMessage('How to use: 1) Select any text in any editor/webview/terminal, 2) Press Ctrl+Shift+E (Cmd+Shift+E on Mac)');
+                            }
+                        });
+                        return;
+                    }
+                    textToEnhance = clipboardText;
+                    // Create a clipboard-based context
+                    try {
+                        context = textProcessor_1.TextProcessor.createClipboardContext(textToEnhance);
+                    }
+                    catch (validationError) {
+                        vscode.window.showWarningMessage(validationError.message || 'Invalid clipboard text. Please select valid text and try again.', 'Learn More').then(action => {
+                            if (action === 'Learn More') {
+                                vscode.window.showInformationMessage('Text requirements: 3-10,000 characters, non-empty content');
+                            }
+                        });
+                        return;
+                    }
+                }
+                catch (copyError) {
+                    vscode.window.showErrorMessage('Failed to copy text. Please select text manually and try again.');
+                    return;
+                }
+            }
             if (!context) {
-                return; // Error already shown in createEnhancementContext
+                vscode.window.showErrorMessage('Unable to get text for enhancement. Please select text and try again.');
+                return;
             }
             // Ensure API key exists
             const apiKey = await this.settingsManager.ensureApiKeyExists();
@@ -77,8 +116,10 @@ class EnhancePromptCommand {
             if (!enhancedText) {
                 return; // Enhancement failed or was cancelled
             }
-            // Show output action selector
-            const outputAction = await quickPick_1.QuickPickManager.showOutputActionSelector();
+            // Show output action selector based on context type
+            const outputAction = context.isClipboardBased
+                ? await quickPick_1.QuickPickManager.showClipboardOutputActionSelector()
+                : await quickPick_1.QuickPickManager.showOutputActionSelector();
             if (!outputAction) {
                 return; // User cancelled output action selection
             }

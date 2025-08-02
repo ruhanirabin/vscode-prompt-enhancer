@@ -83,7 +83,7 @@
         "command": "promptEnhancer.enhance",
         "key": "ctrl+shift+alt+/",
         "mac": "cmd+shift+alt+/",
-        "when": "editorHasSelection"
+        "when": "editorTextFocus || webviewFocus || terminalFocus"
       },
       {
         "command": "promptEnhancer.configureApiKey",

@@ -73,9 +73,41 @@ class TextProcessor {
             document: editor.document
         };
     }
+    static createClipboardContext(text) {
+        // Validate clipboard text
+        const trimmedText = text.trim();
+        if (trimmedText.length === 0) {
+            throw new Error('Clipboard text is empty or contains only whitespace.');
+        }
+        if (trimmedText.length > 10000) {
+            throw new Error('Clipboard text is too long. Please select less than 10,000 characters.');
+        }
+        if (trimmedText.length < 3) {
+            throw new Error('Clipboard text is too short. Please select at least 3 characters.');
+        }
+        return {
+            editor: null,
+            selection: null,
+            selectedText: trimmedText,
+            document: null,
+            isClipboardBased: true
+        };
+    }
     static async applyEnhancedText(context, enhancedText, action) {
         const { editor, selection } = context;
         try {
+            // For clipboard-based contexts, only clipboard action is available
+            if (context.isClipboardBased || !editor || !selection) {
+                if (action !== 'copyToClipboard') {
+                    // Force clipboard action for clipboard-based contexts
+                    await TextProcessor.copyToClipboard(enhancedText);
+                    vscode.window.showInformationMessage('Enhanced text copied to clipboard (editor actions not available for clipboard-based enhancement)');
+                }
+                else {
+                    await TextProcessor.copyToClipboard(enhancedText);
+                }
+                return;
+            }
             switch (action) {
                 case 'replace':
                     await TextProcessor.replaceText(editor, selection, enhancedText);
@@ -133,6 +165,10 @@ class TextProcessor {
     }
     static getContextInfo(context) {
         const { document, selection } = context;
+        if (context.isClipboardBased || !document || !selection) {
+            const charCount = context.selectedText.length;
+            return `Clipboard text, Characters: ${charCount}`;
+        }
         const fileType = document.languageId;
         const lineCount = selection.end.line - selection.start.line + 1;
         const charCount = context.selectedText.length;

@@ -24,3 +24,11 @@ TROUBLESHOOTING_*.md
 COMPLETION_SUMMARY.md
 PROJECT_SUMMARY.md
 test-prompts.md
+*.vsix
+# Logs
+*.log
+*.log.*
+# Temporary files
+*.tmp
+*.temp
+*.bak
