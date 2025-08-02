@@ -1,6 +1,6 @@
 {
   "name": "prompt-enhancer-ex",
-  "displayName": "Prompt Enhancer",
+  "displayName": "Prompt Enhancer - Build Advanced Prompts with OpenAI API",
   "description": "Transform basic prompts into sophisticated, detailed prompts using OpenAI's API",
   "version": "1.0.5",
   "publisher": "ruhanirabin",
