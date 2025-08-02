@@ -33,3 +33,4 @@ test-prompts.md
 *.tmp
 *.temp
 *.bak
+/.vscode-test

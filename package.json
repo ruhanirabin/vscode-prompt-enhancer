@@ -76,6 +76,11 @@
         "command": "promptEnhancer.configureApiKey",
         "title": "Configure API Key",
         "category": "Prompt Enhancer"
+      },
+      {
+        "command": "promptEnhancer.manageTemplates",
+        "title": "Manage Templates",
+        "category": "Prompt Enhancer"
       }
     ],
     "keybindings": [
@@ -89,6 +94,11 @@
         "command": "promptEnhancer.configureApiKey",
         "key": "ctrl+shift+alt+p",
         "mac": "cmd+shift+alt+p"
+      },
+      {
+        "command": "promptEnhancer.manageTemplates",
+        "key": "ctrl+shift+alt+t",
+        "mac": "cmd+shift+alt+t"
       }
     ],
     "configuration": {
@@ -113,15 +123,8 @@
         },
         "promptEnhancer.defaultTemplate": {
           "type": "string",
-          "enum": [
-            "general",
-            "technical",
-            "creative",
-            "comments",
-            "custom"
-          ],
           "default": "general",
-          "description": "Default enhancement template to use"
+          "description": "Default enhancement template ID to use (now supports dynamic templates)"
         },
         "promptEnhancer.maxTokens": {
           "type": "number",

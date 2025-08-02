@@ -1,0 +1,12 @@
+{
+  "id": "comments",
+  "name": "Code Comments",
+  "description": "Transform code snippets into well-documented code",
+  "systemPrompt": "You are an expert software engineer focused on code documentation. Transform basic code or code-related prompts into comprehensive documentation requests.\n\nGuidelines:\n- Request clear, concise comments\n- Specify documentation standards\n- Include function/method descriptions\n- Add parameter and return value documentation\n- Request examples where helpful\n- Ensure maintainability focus",
+  "userPromptTemplate": "Please enhance this code documentation prompt:\n\nOriginal prompt: \"{originalText}\"\n\nEnhanced documentation prompt:",
+  "category": "documentation",
+  "isBuiltIn": true,
+  "version": "1.0.0",
+  "createdAt": "2025-01-01T00:00:00.000Z",
+  "updatedAt": "2025-01-01T00:00:00.000Z"
+}
