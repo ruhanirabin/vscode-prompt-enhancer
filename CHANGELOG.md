@@ -7,8 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.6] - 2025-08-02
+
+### Added
+- Added createClipboardContext method to validate and create context from clipboard text
+- Added specific action for clipboard output in QuickPickManager
+- Enhanced user feedback for clipboard operations and requirements
+
+### Changed
+- Updated applyEnhancedText to handle clipboard-based contexts, ensuring only clipboard actions are available
+- Modified enhancePrompt command to first attempt to get text from the active editor, falling back to clipboard if necessary
+- Adjusted keybindings to allow usage in various contexts (editor, webview, terminal)
+- Updated README to improve clipboard handling documentation
+
 ### Fixed
-- Updated README to clarify initial version and future improvements
+- Improved error handling for clipboard text validation
+- Enhanced clipboard handling in text processing
 
 ## [1.0.3] - 2025-08-01
 
