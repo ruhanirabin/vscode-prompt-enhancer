@@ -186,26 +186,13 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Changelog
 
-### Version 1.0.5
-- **Universal Clipboard Support**: Works anywhere in VSCode (editor, terminal, webviews)
-- **Auto-Copy Functionality**: Automatically copies selected text before enhancement
-- **Improved Error Handling**: Better feedback for clipboard-based operations
-- **Smart Context Detection**: Automatically detects editor vs clipboard contexts
-- **Enhanced Context Support**: Removed restrictive "editorHasSelection" condition
-
-### Version 1.0.0
-- Initial release
-- Basic prompt enhancement functionality
-- Multiple enhancement templates
-- Secure API key storage
-- Configurable settings
-- Cross-platform support
+See [CHANGELOG](CHANGELOG.md)
 
 ## Support
 
-- 🐛 Issues: [GitHub Issues](https://github.com/your-repo/prompt-enhancer/issues)
-- 💬 Discussions: [GitHub Discussions](https://github.com/your-repo/prompt-enhancer/discussions)
-- 📖 Wiki: [Documentation](https://github.com/your-repo/prompt-enhancer/wiki)
+- 🐛 Issues: [GitHub Issues](https://github.com/ruhanirabin/vscode-prompt-enhancer/issues)
+- 💬 Discussions: [GitHub Discussions](https://github.com/ruhanirabin/vscode-prompt-enhancer/discussions)
+- 📖 Wiki: [Documentation](https://github.com/ruhanirabin/vscode-prompt-enhancer/wiki)
 
 ---
 
