@@ -1,12 +1,17 @@
 import OpenAI from 'openai';
 import * as vscode from 'vscode';
 import { OpenAIConfig, EnhancementRequest, EnhancementResult } from '../types/openai';
-import { ENHANCEMENT_TEMPLATES } from '../templates/enhancementTemplates';
+import { TemplateRegistry } from '../templates/templateRegistry';
 import { ErrorHandler } from '../utils/errorHandler';
 
 export class OpenAIClient {
   private client: OpenAI | null = null;
   private config: OpenAIConfig | null = null;
+  private templateRegistry: TemplateRegistry;
+
+  constructor(templateRegistry: TemplateRegistry) {
+    this.templateRegistry = templateRegistry;
+  }
 
   async initialize(apiKey: string): Promise<void> {
     const settings = vscode.workspace.getConfiguration('promptEnhancer');
@@ -30,10 +35,15 @@ export class OpenAIClient {
       throw new Error('OpenAI client not initialized');
     }
 
-    const template = ENHANCEMENT_TEMPLATES[request.template];
+    // Get template from registry
+    const template = await this.templateRegistry.getTemplate(request.template);
+    if (!template) {
+      throw new Error(`Template '${request.template}' not found`);
+    }
+
     let userPrompt = template.userPromptTemplate.replace('{originalText}', request.originalText);
     
-    // Handle custom template
+    // Handle custom template with user-defined template from settings
     if (request.template === 'custom') {
       const customTemplate = vscode.workspace.getConfiguration('promptEnhancer').get('customTemplate', '');
       if (customTemplate) {

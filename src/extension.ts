@@ -2,20 +2,29 @@ import * as vscode from 'vscode';
 import { OpenAIClient } from './services/openaiClient';
 import { SettingsManager } from './config/settings';
 import { EnhancePromptCommand } from './commands/enhancePrompt';
+import { TemplateManagerCommand } from './commands/templateManager';
+import { TemplateRegistry } from './templates/templateRegistry';
 import { ErrorHandler } from './utils/errorHandler';
 
 let openaiClient: OpenAIClient;
 let settingsManager: SettingsManager;
 let enhancePromptCommand: EnhancePromptCommand;
+let templateManagerCommand: TemplateManagerCommand;
+let templateRegistry: TemplateRegistry;
 
-export function activate(context: vscode.ExtensionContext) {
+export async function activate(context: vscode.ExtensionContext) {
   ErrorHandler.logInfo('Prompt Enhancer extension is being activated', 'Extension');
 
   try {
-    // Initialize core services
-    openaiClient = new OpenAIClient();
+    // Initialize template registry first
+    templateRegistry = new TemplateRegistry(context);
+    await templateRegistry.initialize();
+
+    // Initialize core services with template registry
+    openaiClient = new OpenAIClient(templateRegistry);
     settingsManager = new SettingsManager(context);
-    enhancePromptCommand = new EnhancePromptCommand(openaiClient, settingsManager);
+    enhancePromptCommand = new EnhancePromptCommand(openaiClient, settingsManager, templateRegistry);
+    templateManagerCommand = new TemplateManagerCommand(templateRegistry);
 
     // Initialize API key status asynchronously
     initializeApiKeyStatus();
@@ -51,6 +60,20 @@ export function activate(context: vscode.ExtensionContext) {
       }
     );
 
+    // Register template management command
+    const manageTemplatesCommand = vscode.commands.registerCommand(
+      'promptEnhancer.manageTemplates',
+      async () => {
+        try {
+          await templateManagerCommand.execute();
+        } catch (error) {
+          ErrorHandler.logError(error, 'Extension.manageTemplatesCommand');
+          const errorInfo = ErrorHandler.parseError(error);
+          await ErrorHandler.showError(errorInfo);
+        }
+      }
+    );
+
     // Register settings change listener
     const settingsChangeListener = settingsManager.onSettingsChanged(() => {
       ErrorHandler.logInfo('Settings changed, updating OpenAI client configuration', 'Extension');
@@ -70,6 +93,7 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(
       enhanceCommand,
       configureApiKeyCommand,
+      manageTemplatesCommand,
       settingsChangeListener
     );
 
@@ -151,7 +175,7 @@ async function showQuickStart() {
     {
       label: '$(template) Step 4: Choose Template',
       description: 'Select enhancement style',
-      detail: 'General, Technical, Creative, Comments, or Custom'
+      detail: 'Built-in templates or your custom templates'
     },
     {
       label: '$(output) Step 5: Apply Result',
@@ -173,4 +197,4 @@ async function showQuickStart() {
 }
 
 // Export for testing
-export { openaiClient, settingsManager, enhancePromptCommand };
+export { openaiClient, settingsManager, enhancePromptCommand, templateRegistry, templateManagerCommand };

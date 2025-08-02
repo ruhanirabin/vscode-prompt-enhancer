@@ -1,12 +1,11 @@
 import * as vscode from 'vscode';
-import { EnhancementTemplate } from './openai';
 
 export type OutputAction = 'replace' | 'insertBelow' | 'insertAbove' | 'copyToClipboard';
 
 export interface ExtensionSettings {
   model: string;
   timeout: number;
-  defaultTemplate: EnhancementTemplate;
+  defaultTemplate: string; // Changed from EnhancementTemplate to string for dynamic templates
   maxTokens: number;
   temperature: number;
   customTemplate: string;
@@ -25,7 +24,8 @@ export interface EnhancementContext {
 }
 
 export interface TemplateQuickPickItem extends vscode.QuickPickItem {
-  template: EnhancementTemplate;
+  template: string; // Changed from EnhancementTemplate to string for dynamic templates
+  category?: string | undefined;
 }
 
 export interface LoadingProgress {
@@ -36,4 +36,23 @@ export interface LoadingProgress {
 export interface ApiKeyValidationResult {
   isValid: boolean;
   error?: string;
+}
+
+// New interfaces for template management
+export interface TemplateManagerQuickPickItem extends vscode.QuickPickItem {
+  templateId: string;
+  isBuiltIn: boolean;
+  action?: 'edit' | 'delete' | 'duplicate' | 'export';
+}
+
+export interface CategoryQuickPickItem extends vscode.QuickPickItem {
+  category: string;
+}
+
+export interface TemplateFormData {
+  name: string;
+  description: string;
+  systemPrompt: string;
+  userPromptTemplate: string;
+  category?: string | undefined;
 }

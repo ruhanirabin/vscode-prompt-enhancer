@@ -40,9 +40,10 @@ const quickPick_1 = require("../ui/quickPick");
 const loadingIndicator_1 = require("../ui/loadingIndicator");
 const errorHandler_1 = require("../utils/errorHandler");
 class EnhancePromptCommand {
-    constructor(openaiClient, settingsManager) {
+    constructor(openaiClient, settingsManager, templateRegistry) {
         this.openaiClient = openaiClient;
         this.settingsManager = settingsManager;
+        this.templateRegistry = templateRegistry;
     }
     async execute() {
         try {
@@ -107,7 +108,7 @@ class EnhancePromptCommand {
             }
             // Show template selector
             const settings = this.settingsManager.getSettings();
-            const selectedTemplate = await quickPick_1.QuickPickManager.showTemplateSelector(settings.defaultTemplate);
+            const selectedTemplate = await quickPick_1.QuickPickManager.showTemplateSelector(this.templateRegistry, settings.defaultTemplate);
             if (!selectedTemplate) {
                 return; // User cancelled template selection
             }

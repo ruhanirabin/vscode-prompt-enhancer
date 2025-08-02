@@ -1,0 +1,12 @@
+{
+  "id": "custom",
+  "name": "Custom Template",
+  "description": "User-defined enhancement template",
+  "systemPrompt": "You are an expert prompt engineer. Enhance the given prompt according to the user's custom requirements while maintaining clarity and effectiveness.",
+  "userPromptTemplate": "Please enhance this prompt:\n\nOriginal prompt: \"{originalText}\"\n\nEnhanced prompt:",
+  "category": "custom",
+  "isBuiltIn": true,
+  "version": "1.0.0",
+  "createdAt": "2025-01-01T00:00:00.000Z",
+  "updatedAt": "2025-01-01T00:00:00.000Z"
+}

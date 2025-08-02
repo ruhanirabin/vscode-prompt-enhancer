@@ -26,7 +26,7 @@ export interface OpenAIResponse {
 }
 export interface EnhancementRequest {
     originalText: string;
-    template: EnhancementTemplate;
+    template: string;
     context?: string;
 }
 export interface EnhancementResult {
@@ -36,4 +36,16 @@ export interface EnhancementResult {
     processingTime: number;
 }
 export type EnhancementTemplate = 'general' | 'technical' | 'creative' | 'comments' | 'custom';
+export interface TemplateDefinition {
+    id: string;
+    name: string;
+    description: string;
+    systemPrompt: string;
+    userPromptTemplate: string;
+    category?: string;
+    isBuiltIn: boolean;
+    version: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
 //# sourceMappingURL=openai.d.ts.map

@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { OpenAIClient } from '../services/openaiClient';
 import { SettingsManager } from '../config/settings';
+import { TemplateRegistry } from '../templates/templateRegistry';
 import { TextProcessor } from '../utils/textProcessor';
 import { QuickPickManager } from '../ui/quickPick';
 import { LoadingIndicator } from '../ui/loadingIndicator';
@@ -11,10 +12,12 @@ import { EnhancementContext } from '../types/extension';
 export class EnhancePromptCommand {
   private openaiClient: OpenAIClient;
   private settingsManager: SettingsManager;
+  private templateRegistry: TemplateRegistry;
 
-  constructor(openaiClient: OpenAIClient, settingsManager: SettingsManager) {
+  constructor(openaiClient: OpenAIClient, settingsManager: SettingsManager, templateRegistry: TemplateRegistry) {
     this.openaiClient = openaiClient;
     this.settingsManager = settingsManager;
+    this.templateRegistry = templateRegistry;
   }
 
   async execute(): Promise<void> {
@@ -102,7 +105,7 @@ export class EnhancePromptCommand {
 
       // Show template selector
       const settings = this.settingsManager.getSettings();
-      const selectedTemplate = await QuickPickManager.showTemplateSelector(settings.defaultTemplate);
+      const selectedTemplate = await QuickPickManager.showTemplateSelector(this.templateRegistry, settings.defaultTemplate);
       if (!selectedTemplate) {
         return; // User cancelled template selection
       }

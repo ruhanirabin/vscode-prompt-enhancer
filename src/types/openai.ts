@@ -29,7 +29,7 @@ export interface OpenAIResponse {
 
 export interface EnhancementRequest {
   originalText: string;
-  template: EnhancementTemplate;
+  template: string; // Changed from EnhancementTemplate to string for dynamic templates
   context?: string;
 }
 
@@ -40,4 +40,19 @@ export interface EnhancementResult {
   processingTime: number;
 }
 
+// Keep for backward compatibility
 export type EnhancementTemplate = 'general' | 'technical' | 'creative' | 'comments' | 'custom';
+
+// New interface for dynamic template definitions (re-export from templateStorage)
+export interface TemplateDefinition {
+  id: string;
+  name: string;
+  description: string;
+  systemPrompt: string;
+  userPromptTemplate: string;
+  category?: string;
+  isBuiltIn: boolean;
+  version: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
