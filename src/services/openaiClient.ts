@@ -3,6 +3,7 @@ import * as vscode from 'vscode';
 import { OpenAIConfig, EnhancementRequest, EnhancementResult, ModelInfo } from '../types/openai';
 import { TemplateRegistry } from '../templates/templateRegistry';
 import { ErrorHandler } from '../utils/errorHandler';
+import { RateLimiter, PreconfiguredLimiters } from '../utils/rateLimiter';
 
 export class OpenAIClient {
   private client: OpenAI | null = null;
@@ -11,9 +12,12 @@ export class OpenAIClient {
   private cachedModels: ModelInfo[] | null = null;
   private modelsCacheTimestamp: number | null = null;
   private readonly CACHE_DURATION_MS = 24 * 60 * 60 * 1000; // 24 hours
+  private rateLimiter: RateLimiter;
 
   constructor(templateRegistry: TemplateRegistry) {
     this.templateRegistry = templateRegistry;
+    // Use conservative rate limiting by default
+    this.rateLimiter = PreconfiguredLimiters.openaiConservative;
   }
 
   async initialize(apiKey: string): Promise<void> {
@@ -61,6 +65,22 @@ export class OpenAIClient {
     const startTime = Date.now();
 
     try {
+      // Check rate limit before making API call
+      const rateLimitStatus = this.rateLimiter.recordRequest();
+      
+      if (!rateLimitStatus.allowed) {
+        const waitSeconds = Math.ceil((rateLimitStatus.waitTime || 0) / 1000);
+        throw new Error(
+          `Rate limit exceeded. Please wait ${waitSeconds} seconds before trying again. ` +
+          `Requests remaining: ${rateLimitStatus.remaining || 0}, Reset in: ${Math.ceil((rateLimitStatus.resetIn || 0) / 1000)}s`
+        );
+      }
+
+      ErrorHandler.logDebug(
+        `Rate limit status: ${rateLimitStatus.remaining}/${this.rateLimiter.getStatus().limit} requests remaining`,
+        'OpenAIClient'
+      );
+
       ErrorHandler.logInfo(`Sending request to OpenAI with model: ${this.config.model}`, 'OpenAIClient');
       
       const response = await this.client.chat.completions.create({
@@ -238,37 +258,37 @@ export class OpenAIClient {
    */
   private getModelPriority(modelId: string): number {
     const id = modelId.toLowerCase();
-    
+
     // Latest and most capable models first
     // GPT-5 and future GPT versions (highest priority)
-    if (id.includes('gpt-5')) return 1;
-    if (id.match(/gpt-5/)) return 1;
-    
+    if (id.includes('gpt-5')) { return 1; }
+    if (id.match(/gpt-5/)) { return 1; }
+
     // O-series reasoning models
-    if (id.includes('o3')) return 2;
-    if (id.includes('o1-preview')) return 3;
-    if (id.includes('o1-mini')) return 4;
-    if (id.includes('o1')) return 5;
-    
+    if (id.includes('o3')) { return 2; }
+    if (id.includes('o1-preview')) { return 3; }
+    if (id.includes('o1-mini')) { return 4; }
+    if (id.includes('o1')) { return 5; }
+
     // GPT-4 variants
-    if (id.includes('gpt-4o') && id.includes('mini')) return 10;
-    if (id.includes('gpt-4o')) return 11;
-    if (id.includes('gpt-4-turbo')) return 12;
-    if (id.includes('gpt-4.5')) return 13;
-    if (id.includes('gpt-4')) return 14;
-    
+    if (id.includes('gpt-4o') && id.includes('mini')) { return 10; }
+    if (id.includes('gpt-4o')) { return 11; }
+    if (id.includes('gpt-4-turbo')) { return 12; }
+    if (id.includes('gpt-4.5')) { return 13; }
+    if (id.includes('gpt-4')) { return 14; }
+
     // GPT-3.5 variants
-    if (id.includes('gpt-3.5-turbo')) return 20;
-    if (id.includes('gpt-3.5')) return 21;
-    
+    if (id.includes('gpt-3.5-turbo')) { return 20; }
+    if (id.includes('gpt-3.5')) { return 21; }
+
     // Future GPT versions (6, 7, etc.)
-    if (id.match(/gpt-[6-9]/)) return 30;
-    
+    if (id.match(/gpt-[6-9]/)) { return 30; }
+
     // Other chat/completion models
-    if (id.includes('chat')) return 40;
-    if (id.includes('instruct')) return 41;
-    if (id.includes('completion')) return 42;
-    
+    if (id.includes('chat')) { return 40; }
+    if (id.includes('instruct')) { return 41; }
+    if (id.includes('completion')) { return 42; }
+
     return 99; // Unknown models at the end
   }
 
