@@ -156,6 +156,15 @@ Get your API key from: https://platform.openai.com/api-keys
 4. Select output action
 ```
 
+**Change Model**
+```
+1. Press Ctrl+Shift+P
+2. Type "Prompt Enhancer: Select Model"
+   Or press Ctrl+Shift+Alt+M (Cmd+Shift+Alt+M on Mac)
+3. View full dynamic model list from OpenAI
+4. Select desired model
+```
+
 ---
 
 ## 🎯 Usage Examples
@@ -243,6 +252,7 @@ After enhancing, use **Command Palette** or the **Save Prompt** command:
 |---------|----------|-------------|
 | **Enhance Prompt** | `Ctrl+Shift+Alt+/` | Enhance selected text (or editor) |
 | **Enhance Entire Editor** | - | Always use full document |
+| **Select OpenAI Model** | `Ctrl+Shift+Alt+M` | View and select from dynamic model list |
 | **Configure API Key** | `Ctrl+Shift+Alt+P` | Set OpenAI API key |
 | **Manage Templates** | `Ctrl+Shift+Alt+T` | Template management |
 | **View History** | `Ctrl+Shift+Alt+H` | View enhancement history |

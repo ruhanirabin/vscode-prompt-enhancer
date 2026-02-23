@@ -8,6 +8,7 @@ import { TemplateRegistry } from './templates/templateRegistry';
 import { ErrorHandler } from './utils/errorHandler';
 import { PromptHistoryService } from './services/promptHistory';
 import { SavePromptService } from './services/savePromptService';
+import { QuickPickManager } from './ui/quickPick';
 
 let openaiClient: OpenAIClient;
 let settingsManager: SettingsManager;
@@ -157,10 +158,33 @@ export async function activate(context: vscode.ExtensionContext) {
           'Clear',
           'Cancel'
         );
-
+        
         if (confirm === 'Clear') {
           await promptHistoryService.clearHistory();
           vscode.window.showInformationMessage('Enhancement history cleared');
+        }
+      }
+    );
+
+    // Register select model command
+    const selectModelCommand = vscode.commands.registerCommand(
+      'promptEnhancer.selectModel',
+      async () => {
+        try {
+          const settings = settingsManager.getSettings();
+          const newModel = await QuickPickManager.showModelSelector(
+            openaiClient,
+            settingsManager,
+            settings.model
+          );
+          
+          if (newModel) {
+            await settingsManager.updateSetting('model', newModel);
+            vscode.window.showInformationMessage(`Model changed to: ${newModel}`);
+          }
+        } catch (error) {
+          ErrorHandler.logError(error, 'Extension.selectModelCommand');
+          vscode.window.showErrorMessage('Failed to change model');
         }
       }
     );
@@ -200,6 +224,7 @@ export async function activate(context: vscode.ExtensionContext) {
       viewHistoryCommand,
       toggleDebugModeCommand,
       clearHistoryCommand,
+      selectModelCommand,
       savePromptCommand,
       enhanceFromEditorCommand,
       settingsChangeListener

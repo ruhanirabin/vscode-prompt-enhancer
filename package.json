@@ -114,6 +114,12 @@
         "icon": "$(save)"
       },
       {
+        "command": "promptEnhancer.selectModel",
+        "title": "Select OpenAI Model",
+        "category": "Prompt Enhancer",
+        "icon": "$(symbol-method)"
+      },
+      {
         "command": "promptEnhancer.toggleDebugMode",
         "title": "Toggle Debug Mode",
         "category": "Prompt Enhancer",
@@ -152,6 +158,11 @@
         "command": "promptEnhancer.toggleDebugMode",
         "key": "ctrl+shift+alt+d",
         "mac": "cmd+shift+alt+d"
+      },
+      {
+        "command": "promptEnhancer.selectModel",
+        "key": "ctrl+shift+alt+m",
+        "mac": "cmd+shift+alt+m"
       }
     ],
     "configuration": {
