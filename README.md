@@ -1,108 +1,198 @@
 # Prompt Enhancer
 
-## This is an initial version, please [report issues](https://github.com/ruhanirabin/vscode-prompt-enhancer/issues/new).
+**Version 1.0.8** | [Changelog](CHANGELOG.md) | [Technical Specs](TECHNICAL_SPECIFICATION.md)
 
-### This will be improved going forward.
+---
 
-Transform basic prompts into sophisticated, detailed prompts using OpenAI's API directly within Visual Studio Code. Originally, designed to help coders to convert their simple prompt into a technical prompt, for vibe coding. But, also added other options. 
+Transform basic prompts into sophisticated, detailed prompts using OpenAI's API directly within Visual Studio Code. Designed for vibe coding, AI-assisted development, and prompt engineering best practices.
 
-![image1](https://raw.githubusercontent.com/ruhanirabin/vscode-prompt-enhancer/refs/heads/main/images/image1.png)
-Initiate the process using a hotkey ⤴️
+![Enhance with Hotkey](https://raw.githubusercontent.com/ruhanirabin/vscode-prompt-enhancer/refs/heads/main/images/image1.png)
+*Initiate enhancement with a hotkey ⤴️*
 
-![image2](https://raw.githubusercontent.com/ruhanirabin/vscode-prompt-enhancer/refs/heads/main/images/image2.png)
-Choose the option to insert ⤴️
+![Choose Output Option](https://raw.githubusercontent.com/ruhanirabin/vscode-prompt-enhancer/refs/heads/main/images/image2.png)
+*Choose how to apply the enhanced prompt ⤴️*
 
-![image3](https://raw.githubusercontent.com/ruhanirabin/vscode-prompt-enhancer/refs/heads/main/images/image3.png)
-Example output ⤴️
+![Example Output](https://raw.githubusercontent.com/ruhanirabin/vscode-prompt-enhancer/refs/heads/main/images/image3.png)
+*Example enhancement output ⤴️*
 
 ![Template Manager](https://raw.githubusercontent.com/ruhanirabin/vscode-prompt-enhancer/refs/heads/main/images/template-manager.png)
-Import/Export, Create and Use existing templates from Template Manager ⤴️
+*Manage templates with import/export ⤴️*
 
+---
 
-## Features
+## ✨ What's New in v1.0.8
 
-### 🚀 **Universal One-Click Enhancement**
-- Select any text anywhere in VSCode (editor, terminal, webviews, etc.)
-- Press `Ctrl+Shift+Alt+/` (or `Cmd+Shift+Alt+/` on Mac)
-- Extension automatically copies selected text and enhances it
+### 🎨 UI Enhancements
+- **Editor Title Bar Button**: One-click enhancement from editor header
+- **Command Palette Access**: All commands available via Ctrl+Shift+P
+- **Save Prompt Feature**: Save enhancements to markdown files
+
+### 📜 Prompt History
+- **Enhancement Tracking**: All your enhancements with full metadata
+- **Statistics Dashboard**: View usage, tokens, and performance
+- **Export/Import**: Backup and restore your history
+- **VSCode Sync**: History syncs with your VSCode profile
+
+### 🔍 Dynamic Model Discovery
+- **Auto-Discovery**: Fetch latest OpenAI models automatically
+- **Smart Filtering**: Text models only (no embeddings/images)
+- **Priority Sorting**: Best models first (GPT-5, O-series, GPT-4)
+- **Custom Model ID**: Enter any model ID manually
+
+### 🛡️ Rate Limiting
+- **Client-Side Protection**: Prevent API rate limit errors
+- **Real-time Status**: See remaining requests
+- **Auto-Throttling**: Wait automatically when needed
+
+### 🐛 Debug Mode
+- **Detailed Logging**: Timestamped, categorized logs
+- **Output Channel**: Dedicated debug panel
+- **Toggle Command**: Quick enable/disable
+
+---
+
+## 🚀 Features
+
+### **Universal One-Click Enhancement**
+- Select any text anywhere in VSCode (editor, terminal, webviews)
+- Press `Ctrl+Shift+Alt+/` or click the title bar button
+- Command Palette access for all commands
 - Works universally across all VSCode contexts
 
-### 🎯 **Advanced Template Management**
-- **Built-in Templates**: Five professionally crafted templates ready to use
-  - **General Enhancement**: Improve clarity, structure, and effectiveness
-  - **Technical Coding**: Optimize for code generation and technical tasks
-  - **Creative Writing**: Enhance for creative and narrative tasks
-  - **Code Comments**: Transform code snippets into well-documented code
-  - **Custom Template**: Use your own enhancement instructions
-- **Template Manager**: Press `Ctrl+Shift+Alt+T` (or `Cmd+Shift+Alt+T` on Mac) to access the template management interface
-- **Template Editor**: Create, edit, and customize your own enhancement templates
-- **Dynamic Template Loading**: Templates are loaded dynamically with persistent storage
-- **Template Categories**: Organize templates by type and purpose for easy selection
-- **Export and Import **: Create new templates or Export and import templates via JSON file
+### **Dynamic Model Selection**
+- **Auto-Discovery**: Fetches available models from OpenAI API
+- **24-Hour Cache**: Fast loading with periodic refresh
+- **Smart Filtering**: Excludes embeddings, image, audio models
+- **Model Priority**: GPT-5 → O-series → GPT-4 → GPT-3.5
+- **Custom Entry**: Manually enter any model ID
 
-### 🔧 **Flexible Output Options**
-- **Replace**: Replace selected text with enhanced version
-- **Insert Below**: Add enhanced prompt below selection
-- **Insert Above**: Add enhanced prompt above selection
-- **Copy to Clipboard**: Copy enhanced prompt for use elsewhere
+### **Advanced Template Management**
+- **Built-in Templates**: 5 professionally crafted templates
+  - **General Enhancement**: Improve clarity and structure
+  - **Technical Coding**: Optimize for code generation
+  - **Creative Writing**: Enhance narrative tasks
+  - **Code Comments**: Generate documentation
+  - **Custom Template**: Your own instructions
+- **Template Manager**: Create, edit, import/export (`Ctrl+Shift+Alt+T`)
+- **Dynamic Loading**: Templates persist with version control
 
-### 🔒 **Secure & Configurable**
-- Encrypted API key storage using VSCode's SecretStorage
-- Configurable OpenAI models (GPT-4o-mini, GPT-4o, GPT-3.5-turbo)
-- Adjustable timeout, creativity, and token limits
-- Works across all file types (text, markdown, code files)
+### **Prompt History**
+- **Full Tracking**: Original + enhanced text with metadata
+- **Statistics**: Total, today, weekly, tokens, avg time
+- **Search**: Find past enhancements by content
+- **Export**: JSON backup of all history
+- **Individual Actions**: View, copy, delete entries
+- **Profile Sync**: Syncs with VSCode settings sync
 
-## Quick Start
+### **Save Prompt to File**
+- **Multiple Formats**:
+  - Original text only
+  - Enhanced text only
+  - Both side-by-side (markdown)
+- **Auto-Naming**: Timestamp-based filenames
+- **Configurable Path**: Set default save directory
+- **Metadata Included**: Model, template, timestamp
+- **Quick Actions**: Open file or show in Explorer
+
+### **Flexible Output Options**
+- **Replace**: Replace selected text
+- **Insert Below**: Add below selection
+- **Insert Above**: Add above selection
+- **Copy to Clipboard**: Copy for use elsewhere
+
+### **Secure & Configurable**
+- **Encrypted Storage**: API keys in VSCode SecretStorage
+- **Dynamic Models**: Auto-fetch from OpenAI
+- **Adjustable Settings**: Timeout, tokens, temperature
+- **Debug Mode**: Detailed logging for troubleshooting
+- **Rate Limiting**: Client-side protection
+
+---
+
+## 📖 Quick Start
 
 ### 1. Install the Extension
-Install from the VSCode Marketplace or package the extension locally.
+
+[Install from Marketplace](vscode:extension/ruhanirabin.prompt-enhancer-ex)
+
+Or install locally:
+```bash
+# Download the .vsix file
+code --install-extension prompt-enhancer-ex-1.0.8.vsix
+```
 
 ### 2. Configure Your API Key
+
 ```
-1. Use Command Palette (Ctrl+Shift+P / Cmd+Shift+P)
-2. Run ">Prompt Enhancer: Configure API Key"
+1. Press Ctrl+Shift+P (Cmd+Shift+P on Mac)
+2. Run "Prompt Enhancer: Configure API Key"
 3. Enter your OpenAI API key
 ```
 
+Get your API key from: https://platform.openai.com/api-keys
+
 ### 3. Start Enhancing
+
+**Method 1: Keyboard Shortcut**
 ```
-1. Select any text anywhere in VSCode (editor, terminal, webviews, etc.)
+1. Select text (or leave unselected for full editor)
 2. Press Ctrl+Shift+Alt+/ (Cmd+Shift+Alt+/ on Mac)
-3. Choose an enhancement template
-4. Enhanced text is automatically copied to clipboard (or choose other output options for editor text)
+3. Choose template
+4. Select output action
 ```
 
-## Installation
-([Click to Install](vscode:extension/ruhanirabin.prompt-enhancer-ex))
+**Method 2: Title Bar Button**
+```
+1. Click the spark icon in editor title bar
+2. Choose template
+3. Select output action
+```
 
-### Prerequisites
-- Visual Studio Code 1.85.0 or higher
-- OpenAI API key ([Get one here](https://platform.openai.com/api-keys))
+**Method 3: Command Palette**
+```
+1. Press Ctrl+Shift+P (Cmd+Shift+P on Mac)
+2. Type "Prompt Enhancer: Enhance"
+3. Choose template
+4. Select output action
+```
 
-## Usage Examples
+---
 
-### Example 1: Basic Prompt Enhancement
+## 🎯 Usage Examples
+
+### Example 1: Technical Coding Prompt
+
 **Before:**
 ```
 Write a function to sort an array
 ```
 
 **After (Technical Template):**
+```typescript
+/**
+ * Sorts an array of numbers in ascending order
+ * @param {number[]} arr - The array to sort
+ * @returns {number[]} A new sorted array
+ * @throws {TypeError} If input is not an array of numbers
+ */
+function sortArray(arr: number[]): number[] {
+  if (!Array.isArray(arr)) {
+    throw new TypeError('Input must be an array');
+  }
+  
+  if (!arr.every(n => typeof n === 'number')) {
+    throw new TypeError('All elements must be numbers');
+  }
+  
+  return [...arr].sort((a, b) => a - b);
+}
+
+// Example usage:
+// sortArray([3, 1, 4, 1, 5]) // returns [1, 1, 3, 4, 5]
 ```
-Create a TypeScript function that sorts an array of numbers in ascending order. The function should:
 
-- Accept an array of numbers as input parameter
-- Return a new sorted array without modifying the original
-- Handle edge cases like empty arrays and single-element arrays
-- Include proper TypeScript type annotations
-- Add JSDoc comments explaining the function's purpose and parameters
-- Use an efficient sorting algorithm
-- Include error handling for invalid inputs
+### Example 2: Creative Writing
 
-Example usage and expected output should be provided in the comments.
-```
-
-### Example 2: Creative Writing Enhancement
 **Before:**
 ```
 A story about a robot
@@ -110,105 +200,254 @@ A story about a robot
 
 **After (Creative Template):**
 ```
-Write a compelling short story about a sentient robot discovering emotions for the first time. The narrative should:
+Write a compelling short story about a sentient robot discovering emotions.
 
-- Set in a near-future dystopian city with neon-lit streets and towering megastructures
-- Feature a maintenance robot named Unit-7 who begins experiencing unexplained sensations
-- Explore themes of consciousness, humanity, and what it means to feel
-- Use vivid sensory descriptions to contrast the cold mechanical world with warm emotional experiences
-- Include dialogue that reveals character development and internal conflict
-- Build tension through the robot's struggle to understand and hide these new feelings
-- Conclude with a meaningful revelation about the nature of consciousness
-- Target length: 1,500-2,000 words
-- Tone: Thoughtful and introspective with moments of wonder and fear
+**Setting:** Near-future dystopian city with neon-lit streets
+**Protagonist:** Unit-7, a maintenance robot
+**Themes:** Consciousness, humanity, emotion vs logic
+**Tone:** Thoughtful, introspective, with wonder and fear
+**Length:** 1,500-2,000 words
+
+**Requirements:**
+- Vivid sensory descriptions
+- Character development through dialogue
+- Build tension through internal conflict
+- Meaningful conclusion about consciousness
 ```
 
-## Configuration
+### Example 3: Save Enhanced Prompt
+
+After enhancing, use **Command Palette** or the **Save Prompt** command:
+
+1. Press `Ctrl+Shift+P`
+2. Type "Prompt Enhancer: Save Prompt"
+3. Choose save option:
+   - Original text
+   - Enhanced text
+   - Both (markdown format)
+
+2. File saved to workspace (or configured directory):
+   ```
+   prompt-write-a-sort-function-1708712345.md
+   ```
+
+3. Quick actions:
+   - Open File
+   - Show in Explorer
+
+---
+
+## ⌨️ Commands & Shortcuts
+
+| Command | Shortcut | Description |
+|---------|----------|-------------|
+| **Enhance Prompt** | `Ctrl+Shift+Alt+/` | Enhance selected text (or editor) |
+| **Enhance Entire Editor** | - | Always use full document |
+| **Configure API Key** | `Ctrl+Shift+Alt+P` | Set OpenAI API key |
+| **Manage Templates** | `Ctrl+Shift+Alt+T` | Template management |
+| **View History** | `Ctrl+Shift+Alt+H` | View enhancement history |
+| **Toggle Debug Mode** | `Ctrl+Shift+Alt+D` | Enable/disable debug logs |
+| **Save Prompt** | - | Save to markdown file |
+| **Clear History** | - | Clear all history |
+
+### UI Access Points
+
+1. **Editor Title Bar**: Click spark icon
+2. **Command Palette**: All commands available (`Ctrl+Shift+P`)
+3. **Keyboard Shortcuts**: See Commands table below
+
+---
+
+## ⚙️ Configuration
 
 ### Settings
-Access settings via `File > Preferences > Settings` and search for "Prompt Enhancer":
+
+Access via `File > Preferences > Settings` → search "Prompt Enhancer"
 
 | Setting | Default | Description |
 |---------|---------|-------------|
-| `promptEnhancer.model` | `gpt-4o-mini` | OpenAI model to use |
+| `promptEnhancer.model` | `gpt-4o-mini` | Default model (dynamic list) |
 | `promptEnhancer.timeout` | `30000` | Request timeout (ms) |
-| `promptEnhancer.defaultTemplate` | `general` | Default enhancement template |
-| `promptEnhancer.maxTokens` | `1000` | Maximum response tokens |
-| `promptEnhancer.temperature` | `0.7` | Creativity level (0-2) |
-| `promptEnhancer.customTemplate` | `""` | Custom enhancement instructions |
+| `promptEnhancer.defaultTemplate` | `general` | Default template |
+| `promptEnhancer.maxTokens` | `1000` | Max response tokens (100-4000) |
+| `promptEnhancer.temperature` | `0.7` | Creativity (0.0-2.0) |
+| `promptEnhancer.customTemplate` | `""` | Custom template text |
+| `promptEnhancer.debugMode` | `false` | Enable debug logging |
+| `promptEnhancer.enableHistory` | `true` | Enable history tracking |
+| `promptEnhancer.historyLimit` | `50` | Max history entries (10-500) |
+| `promptEnhancer.savePromptDirectory` | `""` | Default save path |
 
 ### Model Comparison
 
 | Model | Speed | Quality | Cost | Best For |
 |-------|-------|---------|------|----------|
-| GPT-4o-mini | ⚡⚡⚡ | ⭐⭐⭐ | 💰 | General use, cost-effective |
-| GPT-4o | ⚡⚡ | ⭐⭐⭐⭐⭐ | 💰💰💰 | Complex prompts, highest quality |
-| GPT-3.5-turbo | ⚡⚡⚡ | ⭐⭐ | 💰 | Simple enhancements, fastest |
+| **GPT-4o-mini** | ⚡⚡⚡ | ⭐⭐⭐ | 💰 | Daily use, cost-effective |
+| **GPT-4o** | ⚡⚡ | ⭐⭐⭐⭐⭐ | 💰💰💰 | Complex tasks, best quality |
+| **GPT-3.5-turbo** | ⚡⚡⚡ | ⭐⭐ | 💰 | Simple prompts, fastest |
+| **O1 Preview** | ⚡ | ⭐⭐⭐⭐⭐ | 💰💰💰💰 | Reasoning, complex logic |
+| **O1 Mini** | ⚡⚡ | ⭐⭐⭐⭐ | 💰💰💰 | Technical reasoning |
 
-## Commands
+*Dynamic model discovery shows all available models automatically.*
 
-| Command | Shortcut | Description |
-|---------|----------|-------------|
-| `Prompt Enhancer: Enhance Prompt` | `Ctrl+Shift+Alt+/` | Enhance selected text (works anywhere) |
-| `Prompt Enhancer: Configure API Key` | `Ctrl+Shift+Alt+P` | Set up OpenAI API key |
-| `Prompt Enhancer: Manage Templates` | `Ctrl+Shift+Alt+T` | Manage enhancement templates |
+---
 
-## Troubleshooting
+## 🔧 Troubleshooting
 
 ### Common Issues
 
 **❌ "No text selected" error**
-- Solution: Select some text before using the enhancement command
+- Select text or use "Enhance Entire Editor" command
+- Editor title button works with full document
 
 **❌ "Invalid API key" error**
-- Solution: Verify your OpenAI API key is correct and has sufficient credits
+- Verify API key is correct (starts with `sk-`)
+- Check API key has available credits
+- Re-enter via Command Palette
 
 **❌ "Request timeout" error**
-- Solution: Increase timeout in settings or check internet connection
+- Increase timeout in settings
+- Check internet connection
+- Try a different model
 
 **❌ "Rate limit exceeded" error**
-- Solution: Wait a moment before trying again, or upgrade your OpenAI plan
+- Wait for the shown countdown
+- Client-side limiter prevents this now
+- Check OpenAI account tier limits
 
-### Getting Help
-1. Check the [troubleshooting guide](https://github.com/ruhanirabin/vscode-prompt-enhancer/wiki/Troubleshooting)
-2. Search [existing issues](https://github.com/ruhanirabin/vscode-prompt-enhancer/issues)
-3. Create a [new issue](https://github.com/ruhanirabin/vscode-prompt-enhancer/new) with details
+**❌ "No models returned" error**
+- Check API key validity
+- Verify internet connection
+- Use "Custom Model ID" as fallback
 
-## Contributing
+**❌ History not showing**
+- Ensure `enableHistory` is true
+- Check if history was cleared
+- Verify VSCode sync if using multiple devices
 
-We welcome contributions! To contribute:
+### Debug Mode
 
-### Development Setup
+Enable for detailed troubleshooting:
+
+1. Press `Ctrl+Shift+Alt+D` to toggle
+2. View logs: `View > Output > Prompt Enhancer (Debug)`
+3. Logs include timestamps, categories, and data
+
+---
+
+## 📦 Installation Options
+
+### From Marketplace (Recommended)
+[Install from VSCode Marketplace](vscode:extension/ruhanirabin.prompt-enhancer-ex)
+
+### Manual Installation
+```bash
+# Download .vsix from releases
+code --install-extension prompt-enhancer-ex-1.0.8.vsix
+```
+
+### Build from Source
+```bash
+git clone https://github.com/ruhanirabin/vscode-prompt-enhancer.git
+cd vscode-prompt-enhancer
+npm install
+npm run package
+code --install-extension prompt-enhancer-ex-1.0.8.vsix
+```
+
+---
+
+## 🛠️ Development
+
+### Prerequisites
+- Node.js 18.x or higher
+- VSCode 1.85.0 or higher
+- OpenAI API key
+
+### Setup
+```bash
+npm install
+npm run watch    # Development mode
+npm run compile  # One-time build
+npm run lint     # Code quality check
+npm test         # Run tests
+```
+
+### Testing
+```bash
+# Unit tests
+npm test
+
+# Run extension
+F5 in VSCode
+
+# Package for distribution
+npm run package
+```
+
+See [TECHNICAL_SPECIFICATION.md](TECHNICAL_SPECIFICATION.md) for full details.
+
+---
+
+## 🔒 Privacy & Security
+
+- **API Keys**: Encrypted via VSCode SecretStorage
+- **Data**: Only selected text sent to OpenAI
+- **History**: Stored locally, syncs via VSCode (if enabled)
+- **No Telemetry**: No user data collection
+- **HTTPS Only**: All communication encrypted
+- **Open Source**: Full code transparency
+
+---
+
+## 📚 Additional Resources
+
+- [CHANGELOG](CHANGELOG.md) - Version history
+- [TECHNICAL_SPECIFICATION.md](TECHNICAL_SPECIFICATION.md) - Build & dev guide
+- [GitHub Issues](https://github.com/ruhanirabin/vscode-prompt-enhancer/issues) - Report bugs
+- [Discussions](https://github.com/ruhanirabin/vscode-prompt-enhancer/discussions) - Community
+
+---
+
+## 🤝 Contributing
+
+Contributions welcome! See our [Contributing Guide](CONTRIBUTING.md):
+
 1. Fork the repository
-2. Clone your fork
-3. Install dependencies: `npm install`
-4. Make your changes
-5. Test thoroughly
-6. Submit a pull request
+2. Create feature branch
+3. Make changes
+4. Run `npm run lint` and `npm test`
+5. Submit pull request
 
-## Privacy & Security
+---
 
-- **API Keys**: Stored securely using VSCode's encrypted SecretStorage
-- **Data**: Only selected text is sent to OpenAI's API
-- **Logging**: No sensitive information is logged
-- **Network**: All communication uses HTTPS
+## 📄 License
 
-## License
+MIT License - see [LICENSE](LICENSE) file for details.
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+---
 
-## Changelog
+## 🙏 Support
 
-See [CHANGELOG](CHANGELOG.md)
-
-## Support
-
-- 🐛 Issues: [GitHub Issues](https://github.com/ruhanirabin/vscode-prompt-enhancer/issues)
-- 💬 Discussions: [GitHub Discussions](https://github.com/ruhanirabin/vscode-prompt-enhancer/discussions)
-- 📖 Wiki: [Documentation](https://github.com/ruhanirabin/vscode-prompt-enhancer/wiki)
+- 🐛 **Issues**: [GitHub Issues](https://github.com/ruhanirabin/vscode-prompt-enhancer/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/ruhanirabin/vscode-prompt-enhancer/discussions)
+- 📖 **Docs**: [Wiki](https://github.com/ruhanirabin/vscode-prompt-enhancer/wiki)
+- ⭐ **Rate**: Leave a review on the Marketplace
 
 ---
 
 **Made with ❤️ for the VSCode community**
 
-Transform your prompts, enhance your productivity! 🚀
+*Transform your prompts, enhance your productivity!* 🚀
+
+---
+
+## 📊 Version History
+
+| Version | Date | Key Features |
+|---------|------|--------------|
+| 1.0.8 | 2026-02-23 | UI buttons, history, save prompt, rate limiting, debug mode, dynamic models |
+| 1.0.7 | 2025-08-02 | Template manager, dynamic templates |
+| 1.0.6 | 2025-08-01 | Clipboard handling improvements |
+| 1.0.0 | 2025-08-01 | Initial release |
+
+See [CHANGELOG.md](CHANGELOG.md) for full history.
