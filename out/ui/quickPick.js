@@ -137,44 +137,126 @@ class QuickPickManager {
         });
         return selected?.action || 'copyToClipboard'; // Default to clipboard for clipboard-based contexts
     }
-    static async showModelSelector(currentModel) {
-        const models = [
-            {
-                label: 'GPT-4o-mini',
-                description: 'Fast and cost-effective (Recommended)',
-                detail: 'Best balance of speed, quality, and cost',
-                value: 'gpt-4o-mini'
-            },
-            {
-                label: 'GPT-4o',
-                description: 'Most capable model',
-                detail: 'Highest quality but more expensive',
-                value: 'gpt-4o'
-            },
-            {
-                label: 'GPT-3.5-turbo',
-                description: 'Fast and affordable',
-                detail: 'Good for simple enhancements',
-                value: 'gpt-3.5-turbo'
+    static async showModelSelector(openaiClient, settingsManager, currentModel) {
+        try {
+            // Check if API key exists
+            const apiKey = await settingsManager.getApiKey();
+            if (!apiKey) {
+                // No API key - prompt user to configure
+                const action = await vscode.window.showInformationMessage('OpenAI API Key is required to fetch available models', 'Configure API Key', 'Use Default Model');
+                if (action === 'Configure API Key') {
+                    const newApiKey = await settingsManager.promptForApiKey();
+                    if (newApiKey) {
+                        await openaiClient.initialize(newApiKey);
+                        // Continue to fetch models
+                    }
+                    else {
+                        return undefined; // User cancelled
+                    }
+                }
+                else if (action === 'Use Default Model') {
+                    // Return default model without fetching
+                    return currentModel || 'gpt-4o-mini';
+                }
+                else {
+                    return undefined; // User cancelled
+                }
             }
-        ];
-        const items = models.map(model => ({
-            label: model.label,
-            description: model.description,
-            detail: model.detail,
-            picked: model.value === currentModel
-        }));
-        const selected = await vscode.window.showQuickPick(items, {
-            placeHolder: 'Select OpenAI model',
-            ignoreFocusOut: true,
-            matchOnDescription: true,
-            matchOnDetail: true
-        });
-        if (selected) {
-            const model = models.find(m => m.label === selected.label);
-            return model?.value;
+            // Initialize client if needed
+            if (!openaiClient.isInitialized()) {
+                await openaiClient.initialize(apiKey);
+            }
+            // Fetch models with loading indicator
+            let models = [];
+            await vscode.window.withProgress({
+                location: vscode.ProgressLocation.Notification,
+                title: 'Fetching available models...',
+                cancellable: false
+            }, async () => {
+                models = await openaiClient.listAvailableModels();
+            });
+            if (!models || models.length === 0) {
+                // Fallback to default models if none returned
+                vscode.window.showWarningMessage('No models returned from API. Using default models.');
+                return currentModel || 'gpt-4o-mini';
+            }
+            const items = models.map(model => ({
+                label: `$(symbol-method) ${model.name}`,
+                description: model.description,
+                detail: model.ownedBy ? `ID: ${model.id} • Owner: ${model.ownedBy}` : `ID: ${model.id}`,
+                modelId: model.id,
+                picked: model.id === currentModel
+            }));
+            // Add separator and fallback options
+            items.push({
+                label: '',
+                description: '',
+                kind: vscode.QuickPickItemKind.Separator
+            }, {
+                label: '$(refresh) Refresh Models',
+                description: 'Fetch latest models from OpenAI',
+                modelId: '__refresh__'
+            }, {
+                label: '$(gear) Use Custom Model ID',
+                description: 'Enter a specific model ID manually',
+                modelId: '__custom__'
+            });
+            const selected = await vscode.window.showQuickPick(items, {
+                placeHolder: `Select OpenAI model (${models.length} available)`,
+                ignoreFocusOut: true,
+                matchOnDescription: true,
+                matchOnDetail: true
+            });
+            if (!selected) {
+                return undefined;
+            }
+            // Handle special actions
+            if (selected.modelId === '__refresh__') {
+                // Refresh models
+                await vscode.window.withProgress({
+                    location: vscode.ProgressLocation.Notification,
+                    title: 'Refreshing models...',
+                    cancellable: false
+                }, async () => {
+                    models = await openaiClient.listAvailableModels(true);
+                });
+                // Recursively call to show updated list
+                return QuickPickManager.showModelSelector(openaiClient, settingsManager, currentModel);
+            }
+            if (selected.modelId === '__custom__') {
+                // Allow manual model ID entry
+                const customModelId = await vscode.window.showInputBox({
+                    prompt: 'Enter OpenAI model ID',
+                    placeHolder: 'e.g., gpt-4o-mini, gpt-4, gpt-3.5-turbo',
+                    value: currentModel || '',
+                    validateInput: (value) => {
+                        if (!value || value.trim().length === 0) {
+                            return 'Model ID cannot be empty';
+                        }
+                        return null;
+                    }
+                });
+                return customModelId?.trim();
+            }
+            return selected.modelId;
         }
-        return undefined;
+        catch (error) {
+            console.error('Error in showModelSelector:', error);
+            // Show error with option to use default
+            const action = await vscode.window.showErrorMessage('Failed to fetch models from OpenAI. Please check your API key and connection.', 'Use Default Model', 'Configure API Key', 'Cancel');
+            if (action === 'Use Default Model') {
+                return currentModel || 'gpt-4o-mini';
+            }
+            else if (action === 'Configure API Key') {
+                const newApiKey = await settingsManager.promptForApiKey();
+                if (newApiKey) {
+                    await openaiClient.initialize(newApiKey);
+                    // Retry
+                    return QuickPickManager.showModelSelector(openaiClient, settingsManager, currentModel);
+                }
+            }
+            return undefined;
+        }
     }
     static async showRetryOptions() {
         const items = [

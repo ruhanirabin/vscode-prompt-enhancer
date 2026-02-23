@@ -1,11 +1,13 @@
 import { OutputAction } from '../types/extension';
 import { TemplateRegistry } from '../templates/templateRegistry';
 import { DynamicTemplateDefinition } from '../templates/templateStorage';
+import { OpenAIClient } from '../services/openaiClient';
+import { SettingsManager } from '../config/settings';
 export declare class QuickPickManager {
     static showTemplateSelector(templateRegistry: TemplateRegistry, defaultTemplate?: string): Promise<string | undefined>;
     static showOutputActionSelector(): Promise<OutputAction | undefined>;
     static showClipboardOutputActionSelector(): Promise<OutputAction | undefined>;
-    static showModelSelector(currentModel?: string): Promise<string | undefined>;
+    static showModelSelector(openaiClient: OpenAIClient, settingsManager: SettingsManager, currentModel?: string): Promise<string | undefined>;
     static showRetryOptions(): Promise<string | undefined>;
     static confirmAction(message: string, confirmText?: string, cancelText?: string): Promise<boolean>;
     static showTemplateManager(templateRegistry: TemplateRegistry): Promise<{

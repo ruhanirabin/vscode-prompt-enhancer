@@ -1,7 +1,7 @@
 // OpenAI API Types
 export interface OpenAIConfig {
   apiKey: string;
-  model: 'gpt-4o-mini' | 'gpt-4o' | 'gpt-3.5-turbo';
+  model: string; // Changed from specific enum to string for dynamic models
   maxTokens: number;
   temperature: number;
   timeout: number;
@@ -38,6 +38,13 @@ export interface EnhancementResult {
   tokensUsed: number;
   model: string;
   processingTime: number;
+}
+
+export interface ModelInfo {
+  id: string;
+  name: string;
+  description: string;
+  ownedBy?: string;
 }
 
 // Keep for backward compatibility

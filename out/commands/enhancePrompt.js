@@ -225,7 +225,7 @@ class EnhancePromptCommand {
         const settings = this.settingsManager.getSettings();
         switch (selected.label.split(' ')[1]) {
             case 'Model':
-                const newModel = await quickPick_1.QuickPickManager.showModelSelector(settings.model);
+                const newModel = await quickPick_1.QuickPickManager.showModelSelector(this.openaiClient, this.settingsManager, settings.model);
                 if (newModel) {
                     await this.settingsManager.updateSetting('model', newModel);
                     this.openaiClient.updateConfig({ model: newModel });
