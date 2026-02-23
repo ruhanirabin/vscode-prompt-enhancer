@@ -50,6 +50,46 @@ export class TextProcessor {
     };
   }
 
+  /**
+   * Create context using entire editor document text
+   */
+  static createFullEditorContext(editor: vscode.TextEditor): EnhancementContext | null {
+    const fullText = editor.document.getText();
+    const trimmedText = fullText.trim();
+
+    if (trimmedText.length === 0) {
+      ErrorHandler.showError({
+        type: 'INVALID_REQUEST' as any,
+        message: 'Editor is empty. Please enter some text to enhance.',
+        canRetry: false
+      });
+      return null;
+    }
+
+    if (trimmedText.length > 10000) {
+      ErrorHandler.showError({
+        type: 'INVALID_REQUEST' as any,
+        message: 'Editor content is too long. Please select less than 10,000 characters.',
+        canRetry: false
+      });
+      return null;
+    }
+
+    // Create a selection that covers the entire document for consistency
+    const fullSelection = new vscode.Selection(
+      new vscode.Position(0, 0),
+      editor.document.positionAt(fullText.length)
+    );
+
+    return {
+      editor,
+      selection: fullSelection,
+      selectedText: trimmedText,
+      document: editor.document,
+      isClipboardBased: false
+    };
+  }
+
   static createClipboardContext(text: string): EnhancementContext {
     // Validate clipboard text
     const trimmedText = text.trim();

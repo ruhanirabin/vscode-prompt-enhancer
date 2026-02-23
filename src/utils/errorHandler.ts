@@ -19,6 +19,42 @@ export interface ErrorInfo {
 }
 
 export class ErrorHandler {
+  private static debugModeEnabled: boolean = false;
+  private static outputChannel: vscode.OutputChannel | null = null;
+
+  /**
+   * Initialize error handler with debug mode setting
+   */
+  static initialize(debugMode: boolean = false): void {
+    this.debugModeEnabled = debugMode;
+    if (debugMode && !this.outputChannel) {
+      this.outputChannel = vscode.window.createOutputChannel('Prompt Enhancer (Debug)');
+    }
+  }
+
+  /**
+   * Set debug mode enabled/disabled
+   */
+  static setDebugMode(enabled: boolean): void {
+    this.debugModeEnabled = enabled;
+    if (enabled && !this.outputChannel) {
+      this.outputChannel = vscode.window.createOutputChannel('Prompt Enhancer (Debug)');
+    }
+  }
+
+  /**
+   * Check if debug mode is enabled
+   */
+  static isDebugMode(): boolean {
+    return this.debugModeEnabled;
+  }
+
+  /**
+   * Get the debug output channel
+   */
+  static getOutputChannel(): vscode.OutputChannel | null {
+    return this.outputChannel;
+  }
   static parseError(error: any): ErrorInfo {
     const errorMessage = error?.message || error?.toString() || 'Unknown error';
     
@@ -121,16 +157,72 @@ export class ErrorHandler {
 
   static logError(error: any, context?: string): void {
     const contextStr = context ? `[${context}] ` : '';
+    const timestamp = new Date().toISOString();
+    
+    if (this.debugModeEnabled) {
+      // Detailed logging in debug mode
+      this.logToOutputChannel(`${timestamp} ${contextStr}ERROR:`, error);
+    }
     console.error(`${contextStr}Error:`, error);
   }
 
   static logWarning(message: string, context?: string): void {
     const contextStr = context ? `[${context}] ` : '';
+    const timestamp = new Date().toISOString();
+    
+    if (this.debugModeEnabled) {
+      this.logToOutputChannel(`${timestamp} ${contextStr}WARNING: ${message}`);
+    }
     console.warn(`${contextStr}Warning: ${message}`);
   }
 
   static logInfo(message: string, context?: string): void {
     const contextStr = context ? `[${context}] ` : '';
+    const timestamp = new Date().toISOString();
+    
+    if (this.debugModeEnabled) {
+      this.logToOutputChannel(`${timestamp} ${contextStr}INFO: ${message}`);
+    }
     console.log(`${contextStr}Info: ${message}`);
+  }
+
+  /**
+   * Log debug-specific information (only shown when debug mode is enabled)
+   */
+  static logDebug(message: string, context?: string): void {
+    if (this.debugModeEnabled) {
+      const contextStr = context ? `[${context}] ` : '';
+      const timestamp = new Date().toISOString();
+      this.logToOutputChannel(`${timestamp} ${contextStr}DEBUG: ${message}`);
+    }
+  }
+
+  /**
+   * Log structured data for debugging
+   */
+  static logData(data: any, label: string = 'Data'): void {
+    if (this.debugModeEnabled) {
+      const timestamp = new Date().toISOString();
+      this.logToOutputChannel(`${timestamp} ${label}:`, JSON.stringify(data, null, 2));
+    }
+  }
+
+  /**
+   * Log to output channel if available
+   */
+  private static logToOutputChannel(...args: any[]): void {
+    if (this.outputChannel) {
+      const message = args.map(arg => 
+        typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg)
+      ).join(' ');
+      this.outputChannel.appendLine(message);
+    }
+  }
+
+  /**
+   * Show the debug output channel
+   */
+  static showOutputChannel(): void {
+    this.outputChannel?.show();
   }
 }

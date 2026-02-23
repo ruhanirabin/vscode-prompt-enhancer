@@ -2,35 +2,56 @@ import * as vscode from 'vscode';
 import { OpenAIClient } from '../services/openaiClient';
 import { SettingsManager } from '../config/settings';
 import { TemplateRegistry } from '../templates/templateRegistry';
+import { PromptHistoryService } from '../services/promptHistory';
 import { TextProcessor } from '../utils/textProcessor';
 import { QuickPickManager } from '../ui/quickPick';
 import { LoadingIndicator } from '../ui/loadingIndicator';
 import { ErrorHandler } from '../utils/errorHandler';
-import { EnhancementRequest } from '../types/openai';
+import { EnhancementRequest, EnhancementResult } from '../types/openai';
 import { EnhancementContext } from '../types/extension';
 
 export class EnhancePromptCommand {
   private openaiClient: OpenAIClient;
   private settingsManager: SettingsManager;
   private templateRegistry: TemplateRegistry;
+  private promptHistoryService: PromptHistoryService;
 
-  constructor(openaiClient: OpenAIClient, settingsManager: SettingsManager, templateRegistry: TemplateRegistry) {
+  constructor(
+    openaiClient: OpenAIClient,
+    settingsManager: SettingsManager,
+    templateRegistry: TemplateRegistry,
+    promptHistoryService: PromptHistoryService
+  ) {
     this.openaiClient = openaiClient;
     this.settingsManager = settingsManager;
     this.templateRegistry = templateRegistry;
+    this.promptHistoryService = promptHistoryService;
   }
 
-  async execute(): Promise<void> {
+  /**
+   * Execute the enhancement command
+   * @param useFullEditorText If true, use entire editor text instead of selection
+   */
+  async execute(useFullEditorText: boolean = false): Promise<void> {
     try {
       let textToEnhance = '';
       let context: EnhancementContext | null = null;
 
-      // Try to get text from active editor first (for better context)
+      // Try to get text from active editor first
       const editor = vscode.window.activeTextEditor;
-      if (editor && !editor.selection.isEmpty) {
-        context = TextProcessor.createEnhancementContext(editor);
-        if (context) {
-          textToEnhance = context.selectedText;
+      
+      if (editor) {
+        // If useFullEditorText is true, use entire document
+        if (useFullEditorText) {
+          textToEnhance = editor.document.getText();
+          context = TextProcessor.createFullEditorContext(editor);
+        } 
+        // Otherwise use selection if available
+        else if (!editor.selection.isEmpty) {
+          context = TextProcessor.createEnhancementContext(editor);
+          if (context) {
+            textToEnhance = context.selectedText;
+          }
         }
       }
 
@@ -111,9 +132,24 @@ export class EnhancePromptCommand {
       }
 
       // Enhance the prompt
-      const enhancedText = await this.enhancePromptWithRetry(context, selectedTemplate);
-      if (!enhancedText) {
+      const result = await this.enhancePromptWithRetry(context, selectedTemplate);
+      if (!result) {
         return; // Enhancement failed or was cancelled
+      }
+
+      const enhancedText = typeof result === 'string' ? result : result.enhancedText;
+      const resultData = typeof result === 'string' ? null : result;
+
+      // Record to history if enabled
+      if (resultData && this.promptHistoryService.isEnabled()) {
+        await this.promptHistoryService.addEntry({
+          originalText: context.selectedText,
+          enhancedText: enhancedText,
+          model: resultData.model,
+          template: selectedTemplate,
+          tokensUsed: resultData.tokensUsed,
+          processingTime: resultData.processingTime
+        });
       }
 
       // Show output action selector based on context type
@@ -146,12 +182,12 @@ export class EnhancePromptCommand {
     context: EnhancementContext,
     template: any,
     maxRetries: number = 3
-  ): Promise<string | null> {
+  ): Promise<EnhancementResult | null> {
     let attempt = 0;
 
     while (attempt < maxRetries) {
       try {
-        const enhancedText = await LoadingIndicator.show(
+        const result = await LoadingIndicator.show(
           'Enhancing Prompt',
           async (progress) => {
             progress({ message: 'Connecting to OpenAI...' });
@@ -168,11 +204,11 @@ export class EnhancePromptCommand {
 
             progress({ message: 'Enhancement complete!', increment: 70 });
 
-            return result.enhancedText;
+            return result;
           }
         );
 
-        return enhancedText;
+        return result;
 
       } catch (error) {
         attempt++;

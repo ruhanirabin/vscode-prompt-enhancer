@@ -9,6 +9,9 @@ export interface ExtensionSettings {
   maxTokens: number;
   temperature: number;
   customTemplate: string;
+  debugMode: boolean;
+  enableHistory: boolean;
+  historyLimit: number;
 }
 
 export interface QuickPickItem extends vscode.QuickPickItem {
