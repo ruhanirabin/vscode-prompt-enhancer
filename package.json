@@ -162,7 +162,8 @@
       {
         "command": "promptEnhancer.selectModel",
         "key": "ctrl+shift+alt+m",
-        "mac": "cmd+shift+alt+m"
+        "mac": "cmd+shift+alt+m",
+        "when": "editorTextFocus"
       }
     ],
     "configuration": {
