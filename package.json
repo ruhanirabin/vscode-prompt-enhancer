@@ -2,7 +2,7 @@
   "name": "prompt-enhancer-ex",
   "displayName": "Prompt Enhancer - Build Advanced Prompts with OpenAI API",
   "description": "Transform basic prompts into sophisticated, detailed prompts using OpenAI's API",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "publisher": "ruhanirabin",
   "icon": "images/pex-icon-300px.png",
   "license": "MIT",
@@ -66,11 +66,30 @@
   ],
   "main": "./out/extension.js",
   "contributes": {
+    "menus": {
+      "editor/title": [
+        {
+          "command": "promptEnhancer.enhance",
+          "group": "navigation",
+          "when": "editorTextFocus"
+        }
+      ]
+    },
     "commands": [
       {
         "command": "promptEnhancer.enhance",
         "title": "Enhance Prompt",
-        "category": "Prompt Enhancer"
+        "category": "Prompt Enhancer",
+        "icon": {
+          "light": "images/pex-icon-24px-01.png",
+          "dark": "images/pex-icon-24px-01.png"
+        }
+      },
+      {
+        "command": "promptEnhancer.enhanceFromEditor",
+        "title": "Enhance Entire Editor Text",
+        "category": "Prompt Enhancer",
+        "icon": "$(symbol-text)"
       },
       {
         "command": "promptEnhancer.configureApiKey",
@@ -81,6 +100,30 @@
         "command": "promptEnhancer.manageTemplates",
         "title": "Manage Templates",
         "category": "Prompt Enhancer"
+      },
+      {
+        "command": "promptEnhancer.viewHistory",
+        "title": "View Enhancement History",
+        "category": "Prompt Enhancer",
+        "icon": "$(history)"
+      },
+      {
+        "command": "promptEnhancer.savePrompt",
+        "title": "Save Prompt to File",
+        "category": "Prompt Enhancer",
+        "icon": "$(save)"
+      },
+      {
+        "command": "promptEnhancer.toggleDebugMode",
+        "title": "Toggle Debug Mode",
+        "category": "Prompt Enhancer",
+        "icon": "$(bug)"
+      },
+      {
+        "command": "promptEnhancer.clearHistory",
+        "title": "Clear Enhancement History",
+        "category": "Prompt Enhancer",
+        "icon": "$(trash)"
       }
     ],
     "keybindings": [
@@ -99,6 +142,16 @@
         "command": "promptEnhancer.manageTemplates",
         "key": "ctrl+shift+alt+t",
         "mac": "cmd+shift+alt+t"
+      },
+      {
+        "command": "promptEnhancer.viewHistory",
+        "key": "ctrl+shift+alt+h",
+        "mac": "cmd+shift+alt+h"
+      },
+      {
+        "command": "promptEnhancer.toggleDebugMode",
+        "key": "ctrl+shift+alt+d",
+        "mac": "cmd+shift+alt+d"
       }
     ],
     "configuration": {
@@ -145,6 +198,11 @@
           "default": "Please enhance this prompt to make it more effective and detailed:",
           "description": "Custom template for prompt enhancement"
         },
+        "promptEnhancer.savePromptDirectory": {
+          "type": "string",
+          "default": "",
+          "description": "Default directory to save prompts (leave empty to use workspace root)"
+        },
         "promptEnhancer.apiKeyStatus": {
           "type": "string",
           "enum": [
@@ -157,6 +215,23 @@
             "API Key not configured - use Command Palette: 'Prompt Enhancer: Configure API Key'",
             "API Key is configured and stored securely"
           ]
+        },
+        "promptEnhancer.debugMode": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable debug mode for detailed logging (useful for troubleshooting)"
+        },
+        "promptEnhancer.enableHistory": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable prompt enhancement history (syncs with VSCode profile if enabled)"
+        },
+        "promptEnhancer.historyLimit": {
+          "type": "number",
+          "default": 50,
+          "minimum": 10,
+          "maximum": 500,
+          "description": "Maximum number of enhancement history entries to keep"
         }
       }
     }
