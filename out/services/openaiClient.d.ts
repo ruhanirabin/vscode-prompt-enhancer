@@ -7,6 +7,7 @@ export declare class OpenAIClient {
     private cachedModels;
     private modelsCacheTimestamp;
     private readonly CACHE_DURATION_MS;
+    private rateLimiter;
     constructor(templateRegistry: TemplateRegistry);
     initialize(apiKey: string): Promise<void>;
     enhancePrompt(request: EnhancementRequest): Promise<EnhancementResult>;

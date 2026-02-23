@@ -56,7 +56,10 @@ class SettingsManager {
             defaultTemplate: config.get('defaultTemplate', 'general'),
             maxTokens: config.get('maxTokens', 1000),
             temperature: config.get('temperature', 0.7),
-            customTemplate: config.get('customTemplate', 'Please enhance this prompt to make it more effective and detailed:')
+            customTemplate: config.get('customTemplate', 'Please enhance this prompt to make it more effective and detailed:'),
+            debugMode: config.get('debugMode', false),
+            enableHistory: config.get('enableHistory', true),
+            historyLimit: config.get('historyLimit', 50)
         };
     }
     async updateApiKeyStatus(isConfigured) {

@@ -40,21 +40,34 @@ const quickPick_1 = require("../ui/quickPick");
 const loadingIndicator_1 = require("../ui/loadingIndicator");
 const errorHandler_1 = require("../utils/errorHandler");
 class EnhancePromptCommand {
-    constructor(openaiClient, settingsManager, templateRegistry) {
+    constructor(openaiClient, settingsManager, templateRegistry, promptHistoryService) {
         this.openaiClient = openaiClient;
         this.settingsManager = settingsManager;
         this.templateRegistry = templateRegistry;
+        this.promptHistoryService = promptHistoryService;
     }
-    async execute() {
+    /**
+     * Execute the enhancement command
+     * @param useFullEditorText If true, use entire editor text instead of selection
+     */
+    async execute(useFullEditorText = false) {
         try {
             let textToEnhance = '';
             let context = null;
-            // Try to get text from active editor first (for better context)
+            // Try to get text from active editor first
             const editor = vscode.window.activeTextEditor;
-            if (editor && !editor.selection.isEmpty) {
-                context = textProcessor_1.TextProcessor.createEnhancementContext(editor);
-                if (context) {
-                    textToEnhance = context.selectedText;
+            if (editor) {
+                // If useFullEditorText is true, use entire document
+                if (useFullEditorText) {
+                    textToEnhance = editor.document.getText();
+                    context = textProcessor_1.TextProcessor.createFullEditorContext(editor);
+                }
+                // Otherwise use selection if available
+                else if (!editor.selection.isEmpty) {
+                    context = textProcessor_1.TextProcessor.createEnhancementContext(editor);
+                    if (context) {
+                        textToEnhance = context.selectedText;
+                    }
                 }
             }
             // If no text from editor, use clipboard approach
@@ -113,9 +126,22 @@ class EnhancePromptCommand {
                 return; // User cancelled template selection
             }
             // Enhance the prompt
-            const enhancedText = await this.enhancePromptWithRetry(context, selectedTemplate);
-            if (!enhancedText) {
+            const result = await this.enhancePromptWithRetry(context, selectedTemplate);
+            if (!result) {
                 return; // Enhancement failed or was cancelled
+            }
+            const enhancedText = typeof result === 'string' ? result : result.enhancedText;
+            const resultData = typeof result === 'string' ? null : result;
+            // Record to history if enabled
+            if (resultData && this.promptHistoryService.isEnabled()) {
+                await this.promptHistoryService.addEntry({
+                    originalText: context.selectedText,
+                    enhancedText: enhancedText,
+                    model: resultData.model,
+                    template: selectedTemplate,
+                    tokensUsed: resultData.tokensUsed,
+                    processingTime: resultData.processingTime
+                });
             }
             // Show output action selector based on context type
             const outputAction = context.isClipboardBased
@@ -141,7 +167,7 @@ class EnhancePromptCommand {
         let attempt = 0;
         while (attempt < maxRetries) {
             try {
-                const enhancedText = await loadingIndicator_1.LoadingIndicator.show('Enhancing Prompt', async (progress) => {
+                const result = await loadingIndicator_1.LoadingIndicator.show('Enhancing Prompt', async (progress) => {
                     progress({ message: 'Connecting to OpenAI...' });
                     const request = {
                         originalText: context.selectedText,
@@ -151,9 +177,9 @@ class EnhancePromptCommand {
                     progress({ message: 'Processing your prompt...', increment: 30 });
                     const result = await this.openaiClient.enhancePrompt(request);
                     progress({ message: 'Enhancement complete!', increment: 70 });
-                    return result.enhancedText;
+                    return result;
                 });
-                return enhancedText;
+                return result;
             }
             catch (error) {
                 attempt++;

@@ -40,6 +40,7 @@ exports.OpenAIClient = void 0;
 const openai_1 = __importDefault(require("openai"));
 const vscode = __importStar(require("vscode"));
 const errorHandler_1 = require("../utils/errorHandler");
+const rateLimiter_1 = require("../utils/rateLimiter");
 class OpenAIClient {
     constructor(templateRegistry) {
         this.client = null;
@@ -48,6 +49,8 @@ class OpenAIClient {
         this.modelsCacheTimestamp = null;
         this.CACHE_DURATION_MS = 24 * 60 * 60 * 1000; // 24 hours
         this.templateRegistry = templateRegistry;
+        // Use conservative rate limiting by default
+        this.rateLimiter = rateLimiter_1.PreconfiguredLimiters.openaiConservative;
     }
     async initialize(apiKey) {
         const settings = vscode.workspace.getConfiguration('promptEnhancer');
@@ -85,6 +88,14 @@ class OpenAIClient {
         }
         const startTime = Date.now();
         try {
+            // Check rate limit before making API call
+            const rateLimitStatus = this.rateLimiter.recordRequest();
+            if (!rateLimitStatus.allowed) {
+                const waitSeconds = Math.ceil((rateLimitStatus.waitTime || 0) / 1000);
+                throw new Error(`Rate limit exceeded. Please wait ${waitSeconds} seconds before trying again. ` +
+                    `Requests remaining: ${rateLimitStatus.remaining || 0}, Reset in: ${Math.ceil((rateLimitStatus.resetIn || 0) / 1000)}s`);
+            }
+            errorHandler_1.ErrorHandler.logDebug(`Rate limit status: ${rateLimitStatus.remaining}/${this.rateLimiter.getStatus().limit} requests remaining`, 'OpenAIClient');
             errorHandler_1.ErrorHandler.logInfo(`Sending request to OpenAI with model: ${this.config.model}`, 'OpenAIClient');
             const response = await this.client.chat.completions.create({
                 model: this.config.model,
@@ -244,45 +255,62 @@ class OpenAIClient {
         const id = modelId.toLowerCase();
         // Latest and most capable models first
         // GPT-5 and future GPT versions (highest priority)
-        if (id.includes('gpt-5'))
+        if (id.includes('gpt-5')) {
             return 1;
-        if (id.match(/gpt-5/))
+        }
+        if (id.match(/gpt-5/)) {
             return 1;
+        }
         // O-series reasoning models
-        if (id.includes('o3'))
+        if (id.includes('o3')) {
             return 2;
-        if (id.includes('o1-preview'))
+        }
+        if (id.includes('o1-preview')) {
             return 3;
-        if (id.includes('o1-mini'))
+        }
+        if (id.includes('o1-mini')) {
             return 4;
-        if (id.includes('o1'))
+        }
+        if (id.includes('o1')) {
             return 5;
+        }
         // GPT-4 variants
-        if (id.includes('gpt-4o') && id.includes('mini'))
+        if (id.includes('gpt-4o') && id.includes('mini')) {
             return 10;
-        if (id.includes('gpt-4o'))
+        }
+        if (id.includes('gpt-4o')) {
             return 11;
-        if (id.includes('gpt-4-turbo'))
+        }
+        if (id.includes('gpt-4-turbo')) {
             return 12;
-        if (id.includes('gpt-4.5'))
+        }
+        if (id.includes('gpt-4.5')) {
             return 13;
-        if (id.includes('gpt-4'))
+        }
+        if (id.includes('gpt-4')) {
             return 14;
+        }
         // GPT-3.5 variants
-        if (id.includes('gpt-3.5-turbo'))
+        if (id.includes('gpt-3.5-turbo')) {
             return 20;
-        if (id.includes('gpt-3.5'))
+        }
+        if (id.includes('gpt-3.5')) {
             return 21;
+        }
         // Future GPT versions (6, 7, etc.)
-        if (id.match(/gpt-[6-9]/))
+        if (id.match(/gpt-[6-9]/)) {
             return 30;
+        }
         // Other chat/completion models
-        if (id.includes('chat'))
+        if (id.includes('chat')) {
             return 40;
-        if (id.includes('instruct'))
+        }
+        if (id.includes('instruct')) {
             return 41;
-        if (id.includes('completion'))
+        }
+        if (id.includes('completion')) {
             return 42;
+        }
         return 99; // Unknown models at the end
     }
     /**
