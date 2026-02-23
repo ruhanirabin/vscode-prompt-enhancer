@@ -18,6 +18,8 @@ Transform basic prompts into sophisticated, detailed prompts using OpenAI's API 
 ![Template Manager](https://raw.githubusercontent.com/ruhanirabin/vscode-prompt-enhancer/refs/heads/main/images/template-manager.png)
 *Manage templates with import/export ⤴️*
 
+![Model Selector](https://raw.githubusercontent.com/ruhanirabin/vscode-prompt-enhancer/refs/heads/main/images/image4.png)
+*Select model to use ⤴️*
 ---
 
 ## ✨ What's New in v1.0.8
