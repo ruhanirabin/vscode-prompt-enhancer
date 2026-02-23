@@ -159,13 +159,8 @@
       "properties": {
         "promptEnhancer.model": {
           "type": "string",
-          "enum": [
-            "gpt-4o-mini",
-            "gpt-4o",
-            "gpt-3.5-turbo"
-          ],
           "default": "gpt-4o-mini",
-          "description": "OpenAI model to use for prompt enhancement"
+          "description": "OpenAI model to use (use QuickPick model selector for full dynamic list)"
         },
         "promptEnhancer.timeout": {
           "type": "number",
